@@ -1,67 +1,56 @@
 :root {
     --bg: #03070c;
-    --nav-bg: #0a0f16;
+    --nav-bg: #0f172a;
     --card-bg: #0d1117;
     --border: #1f2937;
     --accent: #ef4444;
     --text-dim: #94a3b8;
 }
 
-body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
+body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; scroll-behavior: smooth; }
 
-/* Luca's Capsule Nav */
+/* Navigation Capsule styling based on image */
 .top-nav { padding: 15px 0; position: sticky; top: 0; z-index: 1000; background: var(--bg); }
 .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
 
 .nav-capsule {
-    background: #0f172a;
+    background: var(--nav-bg);
     border: 1px solid var(--border);
     padding: 6px;
-    border-radius: 12px;
+    border-radius: 14px;
     display: flex;
-    gap: 5px;
+    gap: 4px;
 }
 
 .nav-link {
     color: var(--text-dim);
     text-decoration: none;
     font-size: 0.85rem;
-    padding: 8px 16px;
-    border-radius: 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     gap: 8px;
     transition: 0.2s;
 }
 
-.nav-link i { width: 16px; height: 16px; }
+.nav-link i { width: 16px; height: 16px; opacity: 0.7; }
 .nav-link:hover, .nav-link.active { color: #fff; background: #1e293b; }
 
-.refresh-pill {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: #fff;
-    padding: 8px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
+.refresh-pill { background: transparent; border: 1px solid var(--border); color: #fff; padding: 8px 16px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+
+/* Socials Overlay */
+.overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center;
 }
+.overlay.active { display: flex; }
+.overlay-content { background: var(--card-bg); border: 1px solid var(--border); padding: 40px; border-radius: 24px; max-width: 400px; width: 90%; text-align: center; position: relative; }
+.close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
+.social-list { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+.social-item { background: #1e293b; color: #fff; text-decoration: none; padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
+.social-item:hover { background: var(--accent); }
 
-/* Stats and Cards */
-.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 30px 0; }
-.stat-pill { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; border-radius: 16px; }
-.pill-label { display: block; color: var(--text-dim); font-size: 0.7rem; text-transform: uppercase; font-weight: 700; }
-.pill-value { font-size: 1.8rem; font-weight: 700; margin-top: 5px; display: block; }
-
-.luca-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.game-card-luca { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-.luca-thumb-wrapper { width: 100%; aspect-ratio: 16/9; position: relative; }
-.luca-thumb { width: 100%; height: 100%; object-fit: cover; }
-
-.playing-badge { 
-    position: absolute; bottom: 12px; left: 12px; background: rgba(0,0,0,0.8); 
-    padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; 
-}
+/* Dashboard Grids */
+.luca-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.group-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
