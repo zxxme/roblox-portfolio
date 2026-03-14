@@ -28,7 +28,7 @@ async function init() {
             let thumb = "image_247137.png"; 
             const n = game.name.toLowerCase();
             
-            // STRICT MAPPING (Just like Pet Collectors)
+            // EXACT FILENAMES FROM YOUR FOLDER
             if (n.includes("tapping") || n.includes("titan")) {
                 thumb = "image_247137.png";
             } else if (n.includes("yeet") || n.includes("brainrot")) {
@@ -50,7 +50,7 @@ async function init() {
                 </div>`;
         }).join('');
 
-        // Community Icons fixed to your folder
+        // Community icons using your specific folder path
         document.getElementById('group-container').innerHTML = groupsData.map(group => `
             <div class="group-card">
                 <img src="./images/image_247137.png" class="group-icon">
@@ -61,7 +61,7 @@ async function init() {
             </div>`).join('');
 
         lucide.createIcons();
-    } catch (e) { console.error(e); }
+    } catch (e) { console.error("Init failed:", e); }
 }
 
 document.addEventListener('DOMContentLoaded', init);
