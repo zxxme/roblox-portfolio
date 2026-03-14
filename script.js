@@ -23,9 +23,10 @@ async function init() {
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
         document.getElementById('game-container').innerHTML = games.map(game => {
-            let thumb = "image_247137.png"; // Default to your working Tapping image
+            let thumb = "image_247137.png"; // Default fallback
             const n = game.name.toLowerCase();
             
+            // Checking for keywords to show the specific images from your /images folder
             if (n.includes("tapping")) {
                 thumb = "image_247137.png";
             } else if (n.includes("yeet") || n.includes("brainrot")) {
