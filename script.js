@@ -2,6 +2,7 @@ function showSection(sectionId, element) {
     document.querySelectorAll('.page-section').forEach(p => p.style.display = 'none');
     const target = document.getElementById(sectionId);
     if (target) target.style.display = 'block';
+    
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
     element.classList.add('active');
 }
@@ -23,18 +24,23 @@ async function init() {
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
         document.getElementById('game-container').innerHTML = games.map(game => {
-            let thumb = "image_256996.png"; 
+            // Your fallback image that is currently working
+            let thumb = "image_247137.png"; 
             const n = game.name.toLowerCase();
             
-            // Map to the filenames in your images folder
-            if (n.includes("tapping")) thumb = "image_247137.png";
-            else if (n.includes("yeet") || n.includes("brainrot")) thumb = "image_2fc6fc.png";
-            else if (n.includes("pet")) thumb = "Pet Collectors Thumbnail (2).png";
+            // EXACT matching to your folder contents
+            if (n.includes("tapping")) {
+                thumb = "image_247137.png";
+            } else if (n.includes("yeet") || n.includes("brainrot")) {
+                thumb = "image_2fc6fc.png";
+            } else if (n.includes("pet")) {
+                thumb = "Pet Collectors Thumbnail (2).png";
+            }
 
             return `
                 <div class="game-card-luca">
                     <div class="luca-thumb-wrapper">
-                        <img class="luca-thumb" src="./images/${thumb}" onerror="this.src='./images/image_256996.png'">
+                        <img class="luca-thumb" src="./images/${thumb}" onerror="this.src='./images/image_247137.png'">
                         <div class="playing-badge"><span class="badge-dot"></span>${game.playing.toLocaleString()} playing</div>
                     </div>
                     <div style="padding:15px;">
@@ -46,7 +52,7 @@ async function init() {
 
         document.getElementById('group-container').innerHTML = groupsData.map(group => `
             <div class="group-card">
-                <img src="./images/image_256996.png" class="group-icon">
+                <img src="./images/image_247137.png" class="group-icon">
                 <div>
                     <div style="font-weight:600; font-size:0.9rem;">${group.name}</div>
                     <div style="color:var(--text-dim); font-size:0.75rem;">${group.memberCount.toLocaleString()} Members</div>
