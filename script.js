@@ -17,13 +17,11 @@ async function init() {
         document.getElementById('total-visits').innerText = (totalVisits / 1000000).toFixed(1) + "M";
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
-        // Render Games using your specific uploaded filenames
+        // Render Games using your uploaded file names
         document.getElementById('game-container').innerHTML = games.map(game => {
-            let thumb = "yeet-thumb.png"; // Default image
-            
-            // Map the correct image to the correct Game ID
-            if (game.id == 9863921361) thumb = "tap-thumb.png";
-            if (game.id == 9753920000) thumb = "pet-thumb.png";
+            let thumb = "image_2fc6fc.png"; // Default for Yeet a Brainrot
+            if (game.id == 9863921361) thumb = "image_2f7141.png"; // Tap Titans
+            if (game.id == 9753920000) thumb = "image_2f6d43.png"; // Pet Collectors
 
             return `
                 <a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" style="text-decoration:none; color:inherit;">
@@ -35,22 +33,22 @@ async function init() {
                         <div class="luca-info">
                             <h3>${game.name}</h3>
                             <div class="luca-stats">
-                                <div class="l-stat">👥 ${game.visits.toLocaleString()}</div>
+                                <div class="l-stat">👥 ${game.visits.toLocaleString()} Visits</div>
                             </div>
                         </div>
                     </div>
                 </a>`;
         }).join('');
 
-        // Render Groups using your icons
+        // Render Groups
         document.getElementById('group-container').innerHTML = groupsData.map(group => {
-            let icon = "yeet-icon.png";
-            if (group.id == 623751942) icon = "tap-icon.png";
-            if (group.id == 524021069) icon = "pet-icon.png";
+            let icon = "image_2fc6fc.png";
+            if (group.id == 623751942) icon = "image_2f7141.png";
+            if (group.id == 524021069) icon = "image_2f6d43.png";
 
             return `
                 <div class="stat-card" style="display:flex; align-items:center; gap:15px; padding:15px;">
-                    <img src="${icon}" style="width:40px; height:40px; border-radius:8px;" alt="${group.name}">
+                    <img src="${icon}" style="width:40px; height:40px; border-radius:8px;">
                     <div>
                         <div style="font-size:0.85rem; font-weight:600;">${group.name}</div>
                         <div style="font-size:0.7rem; color:var(--text-dim);">${group.memberCount.toLocaleString()} members</div>
@@ -58,7 +56,7 @@ async function init() {
                 </div>`;
         }).join('');
 
-    } catch (e) { console.error("Update Error:", e); }
+    } catch (e) { console.error("Error loading dashboard data:", e); }
 }
 
 document.addEventListener('DOMContentLoaded', init);
