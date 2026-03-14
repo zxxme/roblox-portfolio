@@ -2,6 +2,7 @@ function showSection(sectionId, element) {
     document.querySelectorAll('.page-section').forEach(p => p.style.display = 'none');
     const target = document.getElementById(sectionId);
     if (target) target.style.display = 'block';
+    
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
     element.classList.add('active');
 }
@@ -23,10 +24,10 @@ async function init() {
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
         document.getElementById('game-container').innerHTML = games.map(game => {
-            let thumb = "image_247137.png"; // Fallback image
+            let thumb = "image_247137.png"; 
             const n = game.name.toLowerCase();
             
-            // Image mapping logic
+            // Exact image mapping matching your files
             if (n.includes("tapping") || n.includes("titan")) {
                 thumb = "image_247137.png";
             } else if (n.includes("yeet") || n.includes("brainrot")) {
@@ -48,7 +49,7 @@ async function init() {
                 </div>`;
         }).join('');
 
-        // Updating community icons to use the working image
+        // Community icons
         document.getElementById('group-container').innerHTML = groupsData.map(group => `
             <div class="group-card">
                 <img src="./images/image_247137.png" class="group-icon">
