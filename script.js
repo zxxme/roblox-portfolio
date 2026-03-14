@@ -11,6 +11,7 @@ const CONFIG = {
 };
 
 async function init() {
+    console.log("Initializing loxy's Games...");
     try {
         const [gamesRes, ...groupsData] = await Promise.all([
             fetch(`https://games.roproxy.com/v1/games?universeIds=${CONFIG.universeIds.join(",")}`).then(r => r.json()),
@@ -18,25 +19,36 @@ async function init() {
         ]);
 
         const games = gamesRes.data || [];
+        console.log("Games fetched:", games);
+
+        if (games.length === 0) {
+            document.getElementById('game-container').innerHTML = "<p>No games found. Check Universe IDs.</p>";
+        }
+
         document.getElementById('total-visits').innerText = (games.reduce((s, g) => s + (g.visits || 0), 0) / 1000000).toFixed(1) + "M";
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
         document.getElementById('game-container').innerHTML = games.map(game => {
-            let thumb = "./image_256996.png"; 
+            // Default placeholder if the specific image isn't found
+            let thumb = "image_256996.png"; 
             const n = game.name.toLowerCase();
-            if (n.includes("tap")) thumb = "./image_2f7141.png";
-            else if (n.includes("yeet") || n.includes("brainrot")) thumb = "./image_2fc6fc.png";
-            else if (n.includes("pet")) thumb = "./image_2f6d43.png";
+            
+            if (n.includes("tap")) thumb = "image_247137.png"; // Matches your uploaded file
+            else if (n.includes("yeet") || n.includes("brainrot")) thumb = "image_2fc6fc.png";
+            else if (n.includes("pet")) thumb = "image_2f6d43.png";
 
             return `
                 <div class="game-card-luca">
                     <div class="luca-thumb-wrapper">
-                        <img class="luca-thumb" src="${thumb}" onerror="this.src='./image_256996.png'">
-                        <div class="playing-badge"><span class="badge-dot"></span>${game.playing.toLocaleString()} playing</div>
+                        <img class="luca-thumb" src="./${thumb}" onerror="this.src='./image_256996.png'">
+                        <div class="playing-badge">
+                            <span class="badge-dot"></span>
+                            ${(game.playing || 0).toLocaleString()} playing
+                        </div>
                     </div>
                     <div class="luca-info">
                         <h3>${game.name}</h3>
-                        <p>${game.visits.toLocaleString()} Visits</p>
+                        <p>${(game.visits || 0).toLocaleString()} Visits</p>
                     </div>
                 </div>`;
         }).join('');
@@ -46,14 +58,17 @@ async function init() {
                 <div class="group-card">
                     <img src="./image_256996.png" class="group-icon">
                     <div>
-                        <div style="font-weight:600; font-size:0.9rem;">${group.name}</div>
-                        <div style="color:var(--text-dim); font-size:0.75rem;">${group.memberCount.toLocaleString()} Members</div>
+                        <div style="font-weight:600; font-size:0.9rem;">${group.name || "Unknown Group"}</div>
+                        <div style="color:var(--text-dim); font-size:0.75rem;">${(group.memberCount || 0).toLocaleString()} Members</div>
                     </div>
                 </div>`;
         }).join('');
 
         lucide.createIcons();
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+        console.error("Critical Error:", e);
+        document.getElementById('game-container').innerHTML = "<p>Error loading games. Check console (F12).</p>";
+    }
 }
 
 document.addEventListener('DOMContentLoaded', init);
