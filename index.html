@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>loxy's Portfolio</title>
+    <title>loxy's Games</title>
     <link rel="icon" type="image/png" href="./image_256996.png">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -20,6 +20,8 @@
             <div class="nav-capsule">
                 <div class="nav-link active" onclick="showSection('dashboard', this)"><i data-lucide="home"></i> Home</div>
                 <div class="nav-link" onclick="showSection('dashboard', this)"><i data-lucide="gamepad-2"></i> Games</div>
+                <div class="nav-link" onclick="showSection('communities', this)"><i data-lucide="users"></i> Community</div>
+                <div class="nav-link" onclick="showSection('analytics-page', this)"><i data-lucide="bar-chart-3"></i> Analytics</div>
                 <div class="nav-link" onclick="showSection('socials-page', this)"><i data-lucide="share-2"></i> Socials</div>
             </div>
 
@@ -31,47 +33,57 @@
 
     <main id="dashboard" class="page-section">
         <div class="dashboard-header">
-            <h1>loxy's Games</h1>
-            <p>Track analytics and performance across all my Roblox creations.</p>
+            <h1 class="brand-title">loxy's Games</h1>
+            <p class="brand-subtitle">Track analytics and performance across all my Roblox creations. View real-time player count and visit statistics.</p>
         </div>
 
         <div class="stats-row">
-            <div class="stat-pill"><span class="pill-label">Total Games</span><span class="pill-value">3</span></div>
-            <div class="stat-pill"><span class="pill-label">Combined Visits</span><span class="pill-value" id="total-visits">0.0M</span></div>
-            <div class="stat-pill"><span class="pill-label">Total Playing</span><span class="pill-value" id="total-playing">0</span></div>
+            <div class="stat-pill">
+                <div class="pill-header"><span class="pill-label">Total Games</span><i data-lucide="gamepad-2" class="pill-icon"></i></div>
+                <span class="pill-value">3</span>
+            </div>
+            <div class="stat-pill">
+                <div class="pill-header"><span class="pill-label">Combined Visits</span><i data-lucide="eye" class="pill-icon"></i></div>
+                <span class="pill-value" id="total-visits">0.0M</span>
+            </div>
+            <div class="stat-pill">
+                <div class="pill-header"><span class="pill-label">Total Playing</span><i data-lucide="users" class="pill-icon"></i></div>
+                <span class="pill-value" id="total-playing">0</span>
+            </div>
         </div>
 
         <section id="experiences">
             <h2 class="section-title">All Games</h2>
             <div id="game-container" class="luca-grid"></div>
         </section>
+    </main>
 
-        <section id="communities" style="margin-top: 50px;">
-            <h2 class="section-title">Communities</h2>
-            <div id="group-container" class="group-row"></div>
-        </section>
+    <main id="communities" class="page-section" style="display:none;">
+        <h2 class="section-title">Communities</h2>
+        <div id="group-container" class="group-row"></div>
+    </main>
+
+    <main id="analytics-page" class="page-section" style="display:none;">
+        <h2 class="section-title">Detailed Analytics</h2>
+        <div class="luca-grid">
+            <div class="stat-pill"><h3>Monthly Revenue</h3><p style="color:var(--text-dim)">Coming soon...</p></div>
+            <div class="stat-pill"><h3>Retention Rate</h3><p style="color:var(--text-dim)">Coming soon...</p></div>
+            <div class="stat-pill"><h3>Average Session</h3><p style="color:var(--text-dim)">Coming soon...</p></div>
+        </div>
     </main>
 
     <main id="socials-page" class="page-section" style="display:none;">
-        <div class="dashboard-header">
-            <h1>Socials & Contact</h1>
-            <div class="social-grid">
-                <a href="https://discord.com/users/346046142674501643" target="_blank" class="social-card">
-                    <i data-lucide="message-square"></i>
-                    <h3>Discord</h3>
-                    <p>346046142674501643</p>
-                </a>
-                <a href="https://www.youtube.com/@zxmeplays" target="_blank" class="social-card">
-                    <i data-lucide="youtube"></i>
-                    <h3>YouTube</h3>
-                    <p>@zxmeplays</p>
-                </a>
-                <a href="https://www.roblox.com/users/323062316/profile" target="_blank" class="social-card">
-                    <i data-lucide="user"></i>
-                    <h3>Roblox</h3>
-                    <p>@loxy</p>
-                </a>
-            </div>
+        <h2 class="section-title">Socials</h2>
+        <div class="social-grid">
+            <a href="https://discord.com/users/346046142674501643" target="_blank" class="social-card">
+                <i data-lucide="message-square"></i><h3>Discord</h3>
+            </a>
+            <a href="https://www.youtube.com/@zxmeplays" target="_blank" class="social-card">
+                <i data-lucide="youtube"></i><h3>YouTube</h3>
+            </a>
+            <a href="https://www.roblox.com/users/323062316/profile" target="_blank" class="social-card">
+                <i data-lucide="user"></i><h3>Roblox</h3>
+            </a>
         </div>
     </main>
 

@@ -21,25 +21,26 @@ async function init() {
         document.getElementById('total-visits').innerText = (games.reduce((s, g) => s + (g.visits || 0), 0) / 1000000).toFixed(1) + "M";
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
-        // Render Games using relative paths for your PC
         document.getElementById('game-container').innerHTML = games.map(game => {
-            let thumb = "image_256996.png"; 
+            let thumb = "./image_256996.png"; 
             const n = game.name.toLowerCase();
-            if (n.includes("tap")) thumb = "image_2f7141.png";
-            else if (n.includes("yeet") || n.includes("brainrot")) thumb = "image_2fc6fc.png";
-            else if (n.includes("pet")) thumb = "image_2f6d43.png";
+            if (n.includes("tap")) thumb = "./image_2f7141.png";
+            else if (n.includes("yeet") || n.includes("brainrot")) thumb = "./image_2fc6fc.png";
+            else if (n.includes("pet")) thumb = "./image_2f6d43.png";
 
             return `
                 <div class="game-card-luca">
-                    <div class="luca-thumb-wrapper"><img class="luca-thumb" src="./${thumb}" onerror="this.src='./image_256996.png'"></div>
-                    <div style="padding:15px;">
-                        <h3 style="margin:0; font-size:1rem;">${game.name}</h3>
-                        <p style="color:var(--text-dim); font-size:0.8rem; margin-top:5px;">${game.visits.toLocaleString()} Visits</p>
+                    <div class="luca-thumb-wrapper">
+                        <img class="luca-thumb" src="${thumb}" onerror="this.src='./image_256996.png'">
+                        <div class="playing-badge"><span class="badge-dot"></span>${game.playing.toLocaleString()} playing</div>
+                    </div>
+                    <div class="luca-info">
+                        <h3>${game.name}</h3>
+                        <p>${game.visits.toLocaleString()} Visits</p>
                     </div>
                 </div>`;
         }).join('');
 
-        // Render Communities (Restored)
         document.getElementById('group-container').innerHTML = groupsData.map(group => {
             return `
                 <div class="group-card">
