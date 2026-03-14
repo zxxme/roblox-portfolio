@@ -41,15 +41,9 @@ async function init() {
 
         // Render Communities (Restored)
         document.getElementById('group-container').innerHTML = groupsData.map(group => {
-            let icon = "image_256996.png";
-            const gn = group.name.toLowerCase();
-            if (gn.includes("tap")) icon = "image_2f7141.png";
-            else if (gn.includes("yeet") || gn.includes("brainrot")) icon = "image_2fc6fc.png";
-            else if (gn.includes("pet")) icon = "image_2f6d43.png";
-
             return `
                 <div class="group-card">
-                    <img src="./${icon}" class="group-icon" onerror="this.src='image_256996.png'">
+                    <img src="image_256996.png" class="group-icon">
                     <div>
                         <div style="font-weight:600; font-size:0.9rem;">${group.name}</div>
                         <div style="color:var(--text-dim); font-size:0.75rem;">${group.memberCount.toLocaleString()} Members</div>
