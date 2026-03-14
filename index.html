@@ -5,61 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>loxy's Portfolio</title>
     <link rel="icon" type="image/png" href="image_256996.png">
-    
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main-layout">
-        <aside class="sidebar">
-            <div class="profile-section">
-                <div class="avatar-container">
-                    <img src="image_256996.png" class="avatar-img" alt="loxy">
-                    <div class="status-dot"></div>
-                </div>
-                <h1>loxy's Portfolio</h1>
-                <p>Lead Developer & Designer</p>
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <img src="image_256996.png" class="nav-avatar">
+                <span class="brand-name">loxy's Games</span>
             </div>
-            
-            <nav>
-                <a href="#experiences" class="nav-item">Experiences</a>
-                <a href="#communities" class="nav-item">Communities</a>
-                
-                <div class="skills-section">
-                    <span>Expertise</span>
-                    <ul class="skills-list">
-                        <li>Luau Scripting</li>
-                        <li>UI/UX Design</li>
-                        <li>Project Management</li>
-                    </ul>
-                </div>
-
-                <div class="social-links-sidebar">
-                    <a href="https://www.youtube.com/@zxmeplays" target="_blank">YouTube</a>
-                    <a href="https://x.com/home" target="_blank">Twitter</a>
-                    <a href="https://discord.gg/VZPE8Fs24M" target="_blank">Discord</a>
-                    <a href="https://www.tiktok.com/@zxmee" target="_blank">TikTok</a>
-                </div>
-            </nav>
-            
-            <div class="sidebar-stats">
-                <div class="s-stat"><span>Total Visits</span><p id="total-visits">0</p></div>
-                <div class="s-stat"><span>Playing Now</span><p id="total-playing">0</p></div>
+            <div class="nav-links">
+                <a href="#" class="active">Home</a>
+                <a href="#experiences">Games</a>
+                <a href="#communities">Community</a>
+                <button class="refresh-btn" onclick="location.reload()">Refresh</button>
             </div>
-        </aside>
+        </div>
+    </nav>
 
-        <main class="content">
-            <section id="experiences">
-                <h2 class="section-title">Featured Projects</h2>
-                <div id="game-container"></div>
-            </section>
+    <main class="dashboard">
+        <header class="dashboard-header">
+            <h1>loxy's Games</h1>
+            <p>Track analytics and performance across all my Roblox creations.</p>
+        </header>
 
-            <section id="communities">
-                <h2 class="section-title">Communities</h2>
-                <div id="group-container" class="group-grid"></div>
-            </section>
-        </main>
-    </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Total Games</span>
+                <div class="stat-value">3</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Combined Visits</span>
+                <div class="stat-value" id="total-visits">0M</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Total Playing</span>
+                <div class="stat-value" id="total-playing">0</div>
+            </div>
+        </div>
+
+        <section id="experiences">
+            <div class="section-header">
+                <h2>All Games</h2>
+            </div>
+            <div id="game-container" class="game-grid-luca"></div>
+        </section>
+
+        <section id="communities" style="margin-top: 50px;">
+            <div class="section-header">
+                <h2>Communities</h2>
+            </div>
+            <div id="group-container" class="group-grid-luca"></div>
+        </section>
+    </main>
+
     <script src="script.js"></script>
 </body>
 </html>

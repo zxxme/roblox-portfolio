@@ -12,47 +12,51 @@ async function init() {
 
         const games = gamesRes.data || [];
         
-        // Stats
+        // Header Stats
         const totalVisits = games.reduce((s, g) => s + (g.visits || 0), 0);
-        document.getElementById('total-visits').innerText = (totalVisits / 1000000).toFixed(1) + "M+";
+        document.getElementById('total-visits').innerText = (totalVisits / 1000000).toFixed(1) + "M";
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
-        // Experiences
+        // Render Games in Luca Grid
         document.getElementById('game-container').innerHTML = games.map(game => {
-            let thumb = "image_2fc6fc.png"; // Yeet a Brainrot
-            if (game.id == 9863921361) thumb = "image_2f7141.png"; // Tap Titans
-            if (game.id == 9753920000) thumb = "image_2f6d43.png"; // Pet Collectors
+            let thumb = "image_2fc6fc.png"; // Default
+            if (game.id == 9863921361) thumb = "image_2f7141.png";
+            if (game.id == 9753920000) thumb = "image_2f6d43.png";
 
             return `
-                <div class="game-card">
-                    <div class="thumb-wrapper">
-                        <img class="game-thumb" src="${thumb}" alt="${game.name}">
+                <a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" style="text-decoration:none; color:inherit;">
+                    <div class="game-card-luca">
+                        <div class="luca-thumb-wrapper">
+                            <img class="luca-thumb" src="${thumb}">
+                            <div class="playing-badge">${game.playing.toLocaleString()} playing</div>
+                        </div>
+                        <div class="luca-info">
+                            <h3>${game.name}</h3>
+                            <div class="luca-stats">
+                                <div class="l-stat">👥 ${game.visits.toLocaleString()}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="game-info">
-                        <h3 style="margin:0; font-size:1.6rem; letter-spacing:-1px;">${game.name}</h3>
-                        <p style="color:var(--text-dim); margin: 12px 0;">${game.visits.toLocaleString()} VISITS</p>
-                        <a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" class="play-btn">VIEW PROJECT</a>
-                    </div>
-                </div>`;
+                </a>`;
         }).join('');
 
-        // Communities
+        // Render Groups
         document.getElementById('group-container').innerHTML = groupsData.map(group => {
             let icon = "image_2fc6fc.png";
             if (group.id == 623751942) icon = "image_2f7141.png";
             if (group.id == 524021069) icon = "image_2f6d43.png";
 
             return `
-                <div class="group-card">
-                    <img class="group-logo" src="${icon}" alt="${group.name}">
+                <div class="stat-card" style="display:flex; align-items:center; gap:15px; padding:15px;">
+                    <img src="${icon}" style="width:40px; height:40px; border-radius:8px;">
                     <div>
-                        <h4 style="margin:0; font-size:0.95rem;">${group.name}</h4>
-                        <p style="color:var(--text-dim); font-size:0.75rem; margin-top:4px;">${group.memberCount.toLocaleString()} MEMBERS</p>
+                        <div style="font-size:0.85rem; font-weight:600;">${group.name}</div>
+                        <div style="font-size:0.7rem; color:var(--text-dim);">${group.memberCount.toLocaleString()} members</div>
                     </div>
                 </div>`;
         }).join('');
 
-    } catch (e) { console.error("Load Error:", e); }
+    } catch (e) { console.error(e); }
 }
 
 document.addEventListener('DOMContentLoaded', init);
