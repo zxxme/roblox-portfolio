@@ -1,5 +1,10 @@
-function toggleSocials() {
-    document.getElementById('socials-overlay').classList.toggle('active');
+// Navigation Control
+function showSection(sectionId, element) {
+    document.querySelectorAll('.page-section').forEach(p => p.style.display = 'none');
+    document.getElementById(sectionId).style.display = 'block';
+    
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    element.classList.add('active');
 }
 
 const CONFIG = {
@@ -15,15 +20,13 @@ async function init() {
         ]);
 
         const games = gamesRes.data || [];
-        
-        // Update stats
         document.getElementById('total-visits').innerText = (games.reduce((s, g) => s + (g.visits || 0), 0) / 1000000).toFixed(1) + "M";
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
-        // Fix Glitching Images by using absolute paths
         document.getElementById('game-container').innerHTML = games.map(game => {
             let thumb = "image_256996.png"; 
             const n = game.name.toLowerCase();
+            // Matching uploaded assets
             if (n.includes("tap")) thumb = "image_2f7141.png";
             else if (n.includes("yeet") || n.includes("brainrot")) thumb = "image_2fc6fc.png";
             else if (n.includes("pet")) thumb = "image_2f6d43.png";
@@ -31,29 +34,21 @@ async function init() {
             return `
                 <div class="game-card-luca">
                     <div class="luca-thumb-wrapper">
-                        <img class="luca-thumb" src="./${thumb}">
-                        <div class="playing-badge">${game.playing.toLocaleString()} playing</div>
+                        <img class="luca-thumb" src="./${thumb}" onerror="this.src='image_256996.png'">
                     </div>
-                    <div class="luca-info" style="padding:15px;">
-                        <h3 style="margin:0; font-size:0.95rem;">${game.name}</h3>
-                        <p style="color:var(--text-dim); font-size:0.75rem; margin-top:8px;">${game.visits.toLocaleString()} Visits</p>
-                    </div>
-                </div>`;
-        }).join('');
-
-        // Render Groups
-        document.getElementById('group-container').innerHTML = groupsData.map(group => {
-            return `
-                <div class="stat-pill" style="display:flex; align-items:center; gap:15px; padding:15px;">
-                    <img src="image_256996.png" style="width:40px; height:40px; border-radius:8px;">
-                    <div>
-                        <div style="font-size:0.85rem; font-weight:600;">${group.name}</div>
-                        <div style="font-size:0.7rem; color:var(--text-dim);">${group.memberCount.toLocaleString()} members</div>
+                    <div style="padding:15px;">
+                        <h3 style="margin:0; font-size:1rem;">${game.name}</h3>
+                        <p style="color:var(--text-dim); font-size:0.8rem; margin-top:5px;">${game.visits.toLocaleString()} Visits</p>
                     </div>
                 </div>`;
         }).join('');
 
+        // Re-init icons after dynamic load
+        lucide.createIcons();
     } catch (e) { console.error(e); }
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+    lucide.createIcons();
+});
