@@ -21,7 +21,7 @@ async function init() {
         document.getElementById('total-visits').innerText = (games.reduce((s, g) => s + (g.visits || 0), 0) / 1000000).toFixed(1) + "M";
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
-        // Render Games
+        // Render Games using relative paths for your PC
         document.getElementById('game-container').innerHTML = games.map(game => {
             let thumb = "image_256996.png"; 
             const n = game.name.toLowerCase();
@@ -31,7 +31,7 @@ async function init() {
 
             return `
                 <div class="game-card-luca">
-                    <div class="luca-thumb-wrapper"><img class="luca-thumb" src="./${thumb}" onerror="this.src='image_256996.png'"></div>
+                    <div class="luca-thumb-wrapper"><img class="luca-thumb" src="./${thumb}" onerror="this.src='./image_256996.png'"></div>
                     <div style="padding:15px;">
                         <h3 style="margin:0; font-size:1rem;">${game.name}</h3>
                         <p style="color:var(--text-dim); font-size:0.8rem; margin-top:5px;">${game.visits.toLocaleString()} Visits</p>
@@ -43,7 +43,7 @@ async function init() {
         document.getElementById('group-container').innerHTML = groupsData.map(group => {
             return `
                 <div class="group-card">
-                    <img src="image_256996.png" class="group-icon">
+                    <img src="./image_256996.png" class="group-icon">
                     <div>
                         <div style="font-weight:600; font-size:0.9rem;">${group.name}</div>
                         <div style="color:var(--text-dim); font-size:0.75rem;">${group.memberCount.toLocaleString()} Members</div>
