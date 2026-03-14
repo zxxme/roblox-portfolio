@@ -18,7 +18,7 @@ async function init() {
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
         document.getElementById('total-games').innerText = games.length;
 
-        // Render Games with Custom Assets
+        // Render Games
         document.getElementById('game-container').innerHTML = games.map(game => {
             let thumb = "yeet-thumb.jpg"; // Default
             if (game.id == 9863921361) thumb = "tap-thumb.jpg";
@@ -27,7 +27,7 @@ async function init() {
             return `
                 <div class="game-card">
                     <div class="thumb-wrapper">
-                        <img class="game-thumb" src="${thumb}" alt="${game.name}">
+                        <img class="game-thumb" src="${thumb}">
                         <div class="live-badge">● ${game.playing.toLocaleString()} LIVE</div>
                     </div>
                     <div class="game-info">
@@ -38,7 +38,7 @@ async function init() {
                 </div>`;
         }).join('');
 
-        // Render Groups with Custom Icons
+        // Render Groups
         document.getElementById('group-container').innerHTML = groupsData.map(group => {
             let icon = "yeet-icon.png"; // Default
             if (group.id == 623751942) icon = "tap-icon.png";
@@ -46,16 +46,16 @@ async function init() {
 
             return `
                 <div class="group-card">
-                    <img class="group-logo" src="${icon}" alt="${group.name}">
-                    <div class="group-details">
+                    <img class="group-logo" src="${icon}">
+                    <div>
                         <h4 style="margin:0">${group.name}</h4>
                         <p style="color:var(--text-dim); font-size:0.8rem;">${group.memberCount.toLocaleString()} Members</p>
-                        <a href="https://www.roblox.com/groups/${group.id}" target="_blank" style="color:var(--accent); font-size:0.8rem; text-decoration:none; font-weight:bold;">Join Community →</a>
+                        <a href="https://www.roblox.com/groups/${group.id}" target="_blank" style="color:var(--accent); text-decoration:none; font-size:0.8rem;">Join Community →</a>
                     </div>
                 </div>`;
         }).join('');
 
-    } catch (e) { console.error("Portfolio Load Error:", e); }
+    } catch (e) { console.error(e); }
 }
 
 document.addEventListener('DOMContentLoaded', init);
