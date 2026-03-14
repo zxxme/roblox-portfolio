@@ -24,16 +24,17 @@ async function init() {
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
         document.getElementById('game-container').innerHTML = games.map(game => {
-            // Default working image from your site
-            let thumb = "image_247137.png"; 
+            let thumb = "image_247137.png"; // Default fallback
             const n = game.name.toLowerCase();
             
-            // EXACT FILENAME MAPPING (Like we did for Pet Collectors)
+            // MANUAL MATCHING SYSTEM (Like Pet Collectors)
             if (n.includes("tapping") || n.includes("titan")) {
                 thumb = "image_247137.png";
-            } else if (n.includes("yeet") || n.includes("brainrot")) {
+            } 
+            else if (n.includes("yeet") || n.includes("brainrot")) {
                 thumb = "image_2fc6fc.png";
-            } else if (n.includes("pet")) {
+            } 
+            else if (n.includes("pet")) {
                 thumb = "Pet Collectors Thumbnail (2).png";
             }
 
@@ -50,7 +51,7 @@ async function init() {
                 </div>`;
         }).join('');
 
-        // Community Icons set to your working image
+        // Community Icons
         document.getElementById('group-container').innerHTML = groupsData.map(group => `
             <div class="group-card">
                 <img src="./images/image_247137.png" class="group-icon">
@@ -61,7 +62,7 @@ async function init() {
             </div>`).join('');
 
         lucide.createIcons();
-    } catch (e) { console.error(e); }
+    } catch (e) { console.error("Update Error:", e); }
 }
 
 document.addEventListener('DOMContentLoaded', init);
