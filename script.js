@@ -2,7 +2,6 @@ function showSection(sectionId, element) {
     document.querySelectorAll('.page-section').forEach(p => p.style.display = 'none');
     const target = document.getElementById(sectionId);
     if (target) target.style.display = 'block';
-    
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
     element.classList.add('active');
 }
@@ -24,11 +23,9 @@ async function init() {
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
         document.getElementById('game-container').innerHTML = games.map(game => {
-            // Your fallback image that is currently working
-            let thumb = "image_247137.png"; 
+            let thumb = "image_247137.png"; // Default to your working Tapping image
             const n = game.name.toLowerCase();
             
-            // EXACT matching to your folder contents
             if (n.includes("tapping")) {
                 thumb = "image_247137.png";
             } else if (n.includes("yeet") || n.includes("brainrot")) {
