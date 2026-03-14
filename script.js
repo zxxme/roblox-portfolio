@@ -1,6 +1,6 @@
 const CONFIG = {
     universeIds: [9753920000, 9863921361, 9561068069],
-    groupIds: ["524021069", "623751942", "917252309"] 
+    groupIds: ["524021069", "623751942", "917252309"]
 };
 
 async function init() {
@@ -12,50 +12,47 @@ async function init() {
 
         const games = gamesRes.data || [];
         
-        // Update Stats
+        // Stats
         const totalVisits = games.reduce((s, g) => s + (g.visits || 0), 0);
         document.getElementById('total-visits').innerText = (totalVisits / 1000000).toFixed(1) + "M+";
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
-        document.getElementById('total-games').innerText = games.length;
 
-        // Render Games using .png
+        // Experiences
         document.getElementById('game-container').innerHTML = games.map(game => {
-            let thumb = "yeet-thumb.png"; 
-            if (game.id == 9863921361) thumb = "tap-thumb.png";
-            if (game.id == 9753920000) thumb = "pet-thumb.png";
+            let thumb = "image_2fc6fc.png"; // Yeet a Brainrot
+            if (game.id == 9863921361) thumb = "image_2f7141.png"; // Tap Titans
+            if (game.id == 9753920000) thumb = "image_2f6d43.png"; // Pet Collectors
 
             return `
                 <div class="game-card">
                     <div class="thumb-wrapper">
                         <img class="game-thumb" src="${thumb}" alt="${game.name}">
-                        <div class="live-badge">● ${game.playing.toLocaleString()} LIVE</div>
                     </div>
                     <div class="game-info">
-                        <h3>${game.name}</h3>
-                        <p style="color:var(--text-dim); font-size: 0.9rem;">${game.visits.toLocaleString()} Visits</p>
-                        <a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" class="play-btn">Launch Game</a>
+                        <h3 style="margin:0; font-size:1.6rem; letter-spacing:-1px;">${game.name}</h3>
+                        <p style="color:var(--text-dim); margin: 12px 0;">${game.visits.toLocaleString()} VISITS</p>
+                        <a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" class="play-btn">VIEW PROJECT</a>
                     </div>
                 </div>`;
         }).join('');
 
-        // Render Groups using .png
+        // Communities
         document.getElementById('group-container').innerHTML = groupsData.map(group => {
-            let icon = "yeet-icon.png";
-            if (group.id == 623751942) icon = "tap-icon.png";
-            if (group.id == 524021069) icon = "pet-icon.png";
+            let icon = "image_2fc6fc.png";
+            if (group.id == 623751942) icon = "image_2f7141.png";
+            if (group.id == 524021069) icon = "image_2f6d43.png";
 
             return `
                 <div class="group-card">
                     <img class="group-logo" src="${icon}" alt="${group.name}">
-                    <div class="group-details">
-                        <h4 style="margin:0">${group.name}</h4>
-                        <p style="color:var(--text-dim); font-size:0.8rem;">${group.memberCount.toLocaleString()} Members</p>
-                        <a href="https://www.roblox.com/groups/${group.id}" target="_blank" style="color:var(--accent); font-size:0.8rem; text-decoration:none; font-weight:bold;">Join Community →</a>
+                    <div>
+                        <h4 style="margin:0; font-size:0.95rem;">${group.name}</h4>
+                        <p style="color:var(--text-dim); font-size:0.75rem; margin-top:4px;">${group.memberCount.toLocaleString()} MEMBERS</p>
                     </div>
                 </div>`;
         }).join('');
 
-    } catch (e) { console.error("Error loading images:", e); }
+    } catch (e) { console.error("Load Error:", e); }
 }
 
 document.addEventListener('DOMContentLoaded', init);
