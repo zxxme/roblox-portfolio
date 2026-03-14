@@ -23,11 +23,11 @@ async function init() {
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
         document.getElementById('game-container').innerHTML = games.map(game => {
-            let thumb = "image_247137.png"; // Default fallback
+            let thumb = "image_247137.png"; // Fallback image
             const n = game.name.toLowerCase();
             
-            // Checking for keywords to show the specific images from your /images folder
-            if (n.includes("tapping")) {
+            // Image mapping logic
+            if (n.includes("tapping") || n.includes("titan")) {
                 thumb = "image_247137.png";
             } else if (n.includes("yeet") || n.includes("brainrot")) {
                 thumb = "image_2fc6fc.png";
@@ -48,6 +48,7 @@ async function init() {
                 </div>`;
         }).join('');
 
+        // Updating community icons to use the working image
         document.getElementById('group-container').innerHTML = groupsData.map(group => `
             <div class="group-card">
                 <img src="./images/image_247137.png" class="group-icon">
