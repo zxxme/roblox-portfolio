@@ -1,136 +1,55 @@
-// --- CONFIGURATION ---
 const CONFIG = {
-    // These are the three Universe IDs you provided
-    universeIds: [9753920000, 9863921361, 9561068069], 
-    
-    // ACTION REQUIRED: Paste your Group ID inside the quotes below
-    // You can find this in the URL of your Roblox Group page
-    groupIds: ["PASTE_YOUR_GROUP_ID_HERE"] 
+    universeIds: [9753920000, 9863921361, 9561068069],
+    groupIds: ["524021069", "623751942", "917252309"] 
 };
 
-// --- Data Fetching ---
-async function fetchGames(universeIds) {
-    if (!universeIds || !universeIds.length) return [];
+async function init() {
     try {
-        const url = `https://games.roproxy.com/v1/games?universeIds=${universeIds.join(",")}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        return (data.data || []).sort((a, b) => b.playing - a.playing);
-    } catch (e) {
-        console.error("Error fetching games:", e);
-        return [];
-    }
-}
-
-async function fetchGroups(groupIds) {
-    // Filters out the placeholder text so the site doesn't crash
-    const validIds = groupIds.filter(id => id && id !== "PASTE_YOUR_GROUP_ID_HERE");
-    if (!validIds.length) return [];
-    
-    try {
-        const groupPromises = validIds.map(id => 
-            fetch(`https://groups.roproxy.com/v1/groups/${id}`).then(res => res.json())
-        );
-        const results = await Promise.all(groupPromises);
-        return results.filter(g => g && g.id);
-    } catch (e) {
-        console.error("Error fetching groups:", e);
-        return [];
-    }
-}
-
-async function fetchAndRender() {
-    const gameContainer = document.getElementById('game-container');
-    gameContainer.innerHTML = '<p style="color:var(--text-dim)">Loading YouTubeZxme\'s creations...</p>';
-
-    try {
-        const [games, groups] = await Promise.all([
-            fetchGames(CONFIG.universeIds),
-            fetchGroups(CONFIG.groupIds)
+        const [gamesRes, ...groupsData] = await Promise.all([
+            fetch(`https://games.roproxy.com/v1/games?universeIds=${CONFIG.universeIds.join(",")}`).then(r => r.json()),
+            ...CONFIG.groupIds.map(id => fetch(`https://groups.roproxy.com/v1/groups/${id}`).then(r => r.json()))
         ]);
 
-        updateStatsOverview(games);
-        renderGames(games);
-        renderGroups(groups);
-        renderAnalyticsTable(games);
-    } catch (err) {
-        gameContainer.innerHTML = '<p style="color:red">Failed to load data. Please check your IDs.</p>';
-        console.error("Initialization failed:", err);
-    }
-}
-
-// --- UI Rendering ---
-function updateStatsOverview(games) {
-    let totalVisits = 0, totalPlaying = 0;
-    games.forEach(g => {
-        totalVisits += g.visits || 0;
-        totalPlaying += g.playing || 0;
-    });
-
-    document.getElementById('total-games').innerText = games.length;
-    document.getElementById('total-playing').innerText = totalPlaying.toLocaleString();
-    
-    const visitDisplay = totalVisits >= 1000000 
-        ? (totalVisits / 1000000).toFixed(1) + "M" 
-        : (totalVisits / 1000).toFixed(1) + "K";
-    document.getElementById('total-visits').innerText = visitDisplay;
-}
-
-function renderGames(games) {
-    const gameContainer = document.getElementById('game-container');
-    gameContainer.innerHTML = '';
-
-    games.forEach(game => {
-        const thumbUrl = `https://www.roblox.com/asset-thumbnail/image?assetId=${game.rootPlaceId}&width=420&height=420&format=png`;
+        const games = gamesRes.data || [];
         
-        gameContainer.innerHTML += `
+        // Update Stats Bar
+        const totalVisits = games.reduce((s, g) => s + (g.visits || 0), 0);
+        const totalPlaying = games.reduce((s, g) => s + (g.playing || 0), 0);
+        
+        document.getElementById('total-visits').innerText = (totalVisits / 1000000).toFixed(1) + "M+";
+        document.getElementById('total-playing').innerText = totalPlaying.toLocaleString();
+        document.getElementById('total-games').innerText = games.length;
+
+        // Render Game Cards
+        document.getElementById('game-container').innerHTML = games.map(game => `
             <div class="game-card">
-                <img src="${thumbUrl}" class="game-thumb" alt="${game.name}" onerror="this.src='https://tr.rbxcdn.com/431478796464f1e56b0996a6663f738a/420/420/Image/Png'">
+                <div class="thumb-wrapper">
+                    <img class="game-thumb" src="https://www.roblox.com/asset-thumbnail/image?assetId=${game.rootPlaceId}&width=768&height=432&format=png">
+                    <div class="live-badge">● ${game.playing.toLocaleString()} LIVE</div>
+                </div>
                 <div class="game-info">
-                    <span class="playing-tag" style="color:var(--success); font-weight:bold;">● ${game.playing.toLocaleString()} Playing</span>
-                    <h3 style="margin-top:10px;">${game.name}</h3>
-                    <p style="color:var(--text-dim); font-size:0.9rem;">${game.visits.toLocaleString()} Total Visits</p>
-                    <a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" class="view-btn" style="color:var(--accent); text-decoration:none; display:inline-block; margin-top:10px;">Play Now →</a>
+                    <h3 style="margin:0; font-size: 1.4rem;">${game.name}</h3>
+                    <p style="color:var(--text-dim); margin: 8px 0; font-size: 0.9rem;">${game.visits.toLocaleString()} Total Visits</p>
+                    <a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" class="play-btn">Launch Experience</a>
                 </div>
-            </div>`;
-    });
-}
+            </div>
+        `).join('');
 
-function renderGroups(groups) {
-    const groupContainer = document.getElementById('group-container');
-    groupContainer.innerHTML = '';
-
-    if (groups.length === 0) {
-        groupContainer.innerHTML = '<p style="color:var(--text-dim)">No groups added yet.</p>';
-        return;
-    }
-
-    groups.forEach(group => {
-        groupContainer.innerHTML += `
+        // Render Community Cards
+        document.getElementById('group-container').innerHTML = groupsData.map(group => `
             <div class="group-card">
-                <img src="https://www.roblox.com/asset-thumbnail/set?assetId=${group.id}&width=150&height=150&format=png" class="group-logo" alt="${group.name}">
-                <div class="group-info">
-                    <h3 style="color:var(--accent)">${group.name}</h3>
-                    <p style="color:var(--text-dim)">${group.memberCount.toLocaleString()} Members</p>
+                <img class="group-logo" src="https://www.roblox.com/asset-thumbnail/set?assetId=${group.id}&width=150&height=150&format=png">
+                <div class="group-details">
+                    <h4 style="margin:0; font-size: 1.1rem;">${group.name}</h4>
+                    <p style="color:var(--text-dim); font-size:0.85rem; margin: 4px 0;">${group.memberCount.toLocaleString()} Members</p>
+                    <a href="https://www.roblox.com/groups/${group.id}" target="_blank" style="color:var(--accent); font-size:0.8rem; text-decoration:none; font-weight:bold;">Join Community →</a>
                 </div>
-            </div>`;
-    });
+            </div>
+        `).join('');
+
+    } catch (e) {
+        console.error("Critical Load Error:", e);
+    }
 }
 
-function renderAnalyticsTable(games) {
-    const tableBody = document.getElementById('analytics-body');
-    if (!tableBody) return;
-    tableBody.innerHTML = '';
-
-    games.forEach(game => {
-        tableBody.innerHTML += `
-            <tr>
-                <td><strong>${game.name}</strong></td>
-                <td style="color:var(--success)">${game.playing.toLocaleString()}</td>
-                <td>${game.visits.toLocaleString()}</td>
-                <td><a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" style="color:var(--accent); text-decoration:none;">Open ↗</a></td>
-            </tr>`;
-    });
-}
-
-document.addEventListener('DOMContentLoaded', fetchAndRender);
+document.addEventListener('DOMContentLoaded', init);

@@ -3,65 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTubeZxme | Portfolio</title>
+    <title>YouTubeZxme | Official Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="profile">
-            <img src="https://thumbnails.roproxy.com/v1/users/avatar-headshot?userIds=7272714&size=150x150&format=Png&isCircular=false" alt="YouTubeZxme">
-            <h3>YouTubeZxme</h3>
-        </div>
-        <nav>
-            <a href="#home" class="active"><i class="fas fa-home"></i> Home</a>
-            <a href="#games"><i class="fas fa-gamepad"></i> Games</a>
-            <a href="#community"><i class="fas fa-users"></i> Community</a>
-            <a href="#analytics"><i class="fas fa-chart-line"></i> Analytics</a>
-        </nav>
-        <button class="refresh-btn" onclick="location.reload()"><i class="fas fa-sync"></i> Refresh Data</button>
-    </div>
-
-    <main class="content">
-        <header id="home">
-            <h1>YouTubeZxme's Games</h1>
-            <p>Real-time performance tracking for all creations.</p>
+    <div class="wrapper">
+        <header>
+            <h1 class="logo">YouTube<span class="accent">Zxme</span></h1>
+            <div class="stats-bar">
+                <div class="stat-item"><span id="total-visits">0</span><p>Total Visits</p></div>
+                <div class="stat-item"><span id="total-playing">0</span><p>Playing Now</p></div>
+                <div class="stat-item"><span id="total-games">0</span><p>Experiences</p></div>
+            </div>
         </header>
 
-        <section class="stats-overview">
-            <div class="stat-card"><span>Total Games</span><h2 id="total-games">0</h2></div>
-            <div class="stat-card"><span>Combined Visits</span><h2 id="total-visits">0</h2></div>
-            <div class="stat-card"><span>Total Playing</span><h2 id="total-playing">0</h2></div>
+        <section>
+            <h2 class="section-title">My Experiences</h2>
+            <div id="game-container"></div>
         </section>
 
-        <section id="games">
-            <h2 class="section-title">All Games</h2>
-            <div class="game-grid" id="game-container"></div>
+        <section>
+            <h2 class="section-title">My Communities</h2>
+            <div id="group-container" class="group-grid"></div>
         </section>
 
-        <section id="community">
-            <h2 class="section-title">Groups</h2>
-            <div class="group-grid" id="group-container"></div>
-        </section>
-
-        <section id="analytics">
-            <h2 class="section-title">Analytics</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Game Name</th>
-                            <th>Playing</th>
-                            <th>Total Visits</th>
-                            <th>Link</th>
-                        </tr>
-                    </thead>
-                    <tbody id="analytics-body"></tbody>
-                </table>
+        <footer>
+            <div class="social-links">
+                <a href="#" class="social-btn yt">YouTube</a>
+                <a href="#" class="social-btn tw">Twitter / X</a>
+                <a href="#" class="social-btn dc">Discord</a>
             </div>
-        </section>
-    </main>
-
+            <p style="margin-top:20px; color:var(--text-dim); font-size:0.8rem;">© 2026 YouTubeZxme • Built for the Roblox Community</p>
+        </footer>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
