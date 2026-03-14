@@ -12,26 +12,20 @@ async function init() {
 
         const games = gamesRes.data || [];
         
-        // Header Stats
+        // Update Stats
         const totalVisits = games.reduce((s, g) => s + (g.visits || 0), 0);
         document.getElementById('total-visits').innerText = (totalVisits / 1000000).toFixed(1) + "M";
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
         // Render Games
         document.getElementById('game-container').innerHTML = games.map(game => {
-            let thumb = "";
+            let thumb = "image_256996.png"; // Fallback to your PFP
             const name = game.name.toLowerCase();
 
-            // Matching by Name or ID to ensure images actually show up
-            if (name.includes("tap") || game.rootPlaceId == 115206262431806) {
-                thumb = "image_2f7141.png"; // Tap Titans
-            } else if (name.includes("yeet") || name.includes("brainrot")) {
-                thumb = "image_2fc6fc.png"; // Yeet A Brainrot
-            } else if (name.includes("pet") || name.includes("collector")) {
-                thumb = "image_2f6d43.png"; // Pet Collectors
-            } else {
-                thumb = "image_256996.png"; // Your Avatar as fallback
-            }
+            // Match based on your uploaded assets
+            if (name.includes("tap")) thumb = "image_2f7141.png";
+            else if (name.includes("yeet") || name.includes("brainrot")) thumb = "image_2fc6fc.png";
+            else if (name.includes("pet")) thumb = "image_2f6d43.png";
 
             return `
                 <a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" style="text-decoration:none; color:inherit;">
@@ -42,19 +36,16 @@ async function init() {
                         </div>
                         <div class="luca-info">
                             <h3>${game.name}</h3>
-                            <div class="luca-stats">
-                                <div class="l-stat">👥 ${game.visits.toLocaleString()} Visits</div>
-                            </div>
+                            <p style="color:var(--text-dim); font-size:0.75rem; margin-top:5px;">${game.visits.toLocaleString()} Visits</p>
                         </div>
                     </div>
                 </a>`;
         }).join('');
 
-        // Render Groups
+        // Render Communities
         document.getElementById('group-container').innerHTML = groupsData.map(group => {
-            let icon = "image_256996.png"; // Default to your PFP
+            let icon = "image_256996.png"; 
             const gName = group.name.toLowerCase();
-
             if (gName.includes("tap")) icon = "image_2f7141.png";
             else if (gName.includes("yeet") || gName.includes("brainrot")) icon = "image_2fc6fc.png";
             else if (gName.includes("pet")) icon = "image_2f6d43.png";
@@ -69,7 +60,7 @@ async function init() {
                 </div>`;
         }).join('');
 
-    } catch (e) { console.error("Load error:", e); }
+    } catch (e) { console.error("Error:", e); }
 }
 
 document.addEventListener('DOMContentLoaded', init);
