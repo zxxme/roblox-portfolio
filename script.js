@@ -4,7 +4,7 @@ function showSection(sectionId, element) {
     if (target) target.style.display = 'block';
     
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    element.classList.add('active');
+    if (element) element.classList.add('active');
 }
 
 const CONFIG = {
@@ -24,10 +24,11 @@ async function init() {
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
         document.getElementById('game-container').innerHTML = games.map(game => {
+            // Default working image from your site
             let thumb = "image_247137.png"; 
             const n = game.name.toLowerCase();
             
-            // Exact image mapping matching your files
+            // EXACT FILENAME MAPPING (Like we did for Pet Collectors)
             if (n.includes("tapping") || n.includes("titan")) {
                 thumb = "image_247137.png";
             } else if (n.includes("yeet") || n.includes("brainrot")) {
@@ -49,7 +50,7 @@ async function init() {
                 </div>`;
         }).join('');
 
-        // Community icons
+        // Community Icons set to your working image
         document.getElementById('group-container').innerHTML = groupsData.map(group => `
             <div class="group-card">
                 <img src="./images/image_247137.png" class="group-icon">
