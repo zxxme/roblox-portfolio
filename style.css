@@ -1,7 +1,7 @@
 :root {
-    --bg: #0b0e14;
-    --card-bg: #11141b;
-    --border: #1c212c;
+    --bg: #05070a;
+    --card-bg: #0b0e14;
+    --border: #161b22;
     --accent-red: #ff4444;
     --text-main: #ffffff;
     --text-dim: #8b949e;
@@ -10,34 +10,22 @@
 body { background-color: var(--bg); color: var(--text-main); font-family: 'Inter', sans-serif; margin: 0; padding-top: 100px; }
 .main-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-/* Navigation Fix */
-.top-nav { width: 100%; position: fixed; top: 0; left: 0; background: rgba(11, 14, 20, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); z-index: 9999; padding: 12px 0; }
-.nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-.nav-avatar { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--accent-red); margin-right: 10px; }
-.nav-left { display: flex; align-items: center; font-weight: 700; }
-.nav-capsule { display: flex; gap: 8px; }
-.nav-link { padding: 8px 16px; border-radius: 8px; cursor: pointer; color: var(--text-dim); font-size: 14px; transition: 0.2s; }
-.nav-link:hover, .nav-link.active { background: var(--border); color: #fff; }
+/* Miku Header Glow */
+.nav-avatar { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--accent-red); box-shadow: 0 0 15px rgba(255, 68, 68, 0.4); object-fit: cover; }
 
-/* Header Styling */
-.hero-title { color: var(--accent-red); font-size: 24px; margin: 0; }
-.hero-subtitle { color: var(--text-dim); font-size: 14px; margin: 8px 0 40px 0; }
+/* Stat Cards */
+.premium-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px; }
+.stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+.stat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.stat-number { font-size: 34px; font-weight: 700; }
+.stat-icon-red { color: var(--accent-red); width: 22px; }
 
-/* Grid Layouts (image_142a23.png) */
-.premium-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+/* Trend Colors */
+.trend-up { color: #238636; }
+.trend-down { color: #da3633; }
+.trend-text { color: var(--text-dim); font-size: 13px; font-weight: 400; }
+
+/* Game Grid */
 .luca-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
-
-.stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
-.stat-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
-.stat-label { color: var(--text-dim); font-size: 13px; }
-.stat-number { font-size: 32px; font-weight: 700; }
-.icon-red { color: var(--accent-red); width: 20px; }
-
-/* Game Cards (image_13b21f.jpg) */
-.game-card-luca { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.2s; }
-.game-card-luca:hover { border-color: var(--accent-red); transform: translateY(-4px); }
-.thumb-wrapper { width: 100%; aspect-ratio: 16/9; position: relative; }
-.game-thumb { width: 100%; height: 100%; object-fit: cover; }
-.playing-badge { position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.8); padding: 4px 10px; border-radius: 4px; font-size: 11px; display: flex; align-items: center; gap: 5px; }
-.dot { width: 6px; height: 6px; background: #238636; border-radius: 50%; }
-.game-info { padding: 15px; }
+.hero-title { color: var(--accent-red); font-size: 28px; font-weight: 700; margin-bottom: 5px; }
+.hero-subtitle { color: var(--text-dim); font-size: 14px; margin-bottom: 40px; }
