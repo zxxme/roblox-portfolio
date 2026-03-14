@@ -1,6 +1,8 @@
 function showSection(sectionId, element) {
     document.querySelectorAll('.page-section').forEach(p => p.style.display = 'none');
-    document.getElementById(sectionId).style.display = 'block';
+    const target = document.getElementById(sectionId);
+    if (target) target.style.display = 'block';
+    
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
     element.classList.add('active');
 }
@@ -25,7 +27,7 @@ async function init() {
             let thumb = "image_256996.png"; 
             const n = game.name.toLowerCase();
             
-            // Mapping to your specific local filenames
+            // Map to the filenames in your images.rar
             if (n.includes("tapping")) thumb = "image_247137.png";
             else if (n.includes("yeet") || n.includes("brainrot")) thumb = "image_2fc6fc.png";
             else if (n.includes("pet")) thumb = "Pet Collectors Thumbnail (2).png";
