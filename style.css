@@ -9,52 +9,40 @@
 
 body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
 
-.top-nav { padding: 12px 0; position: sticky; top: 0; z-index: 100; background: var(--bg); }
+.top-nav { padding: 12px 0; position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
 .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
 
 .nav-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
 .brand-name { font-weight: 600; color: var(--accent); margin-left: 10px; font-size: 0.9rem; }
 
 .nav-capsule { background: #0f172a; border: 1px solid var(--border); padding: 4px; border-radius: 10px; display: flex; gap: 2px; }
-.nav-link { color: var(--text-dim); padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: 0.2s; }
-.nav-link:hover, .nav-link.active { color: #fff; background: #1e293b; }
-.nav-link i { width: 14px; height: 14px; }
+.nav-link { color: var(--text-dim); padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.nav-link.active { color: #fff; background: #1e293b; }
 
-.refresh-pill { background: transparent; border: 1px solid var(--border); color: #fff; padding: 6px 14px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; }
+.refresh-pill { background: transparent; border: 1px solid var(--border); color: #fff; padding: 6px 14px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
 
 .page-section { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
 .brand-title { font-size: 1.75rem; color: var(--accent); margin-bottom: 5px; }
-.brand-subtitle { color: var(--text-dim); font-size: 0.85rem; max-width: 600px; line-height: 1.5; margin-bottom: 30px; }
+.brand-subtitle { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 30px; }
 
 .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 40px; }
 .stat-pill { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; border-radius: 12px; }
-.pill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.pill-label { color: var(--text-dim); font-size: 0.75rem; font-weight: 500; }
-.pill-icon { width: 16px; height: 16px; color: var(--accent); }
+.pill-label { color: var(--text-dim); font-size: 0.75rem; display: block; margin-bottom: 5px; }
 .pill-value { font-size: 1.5rem; font-weight: 700; }
 
-.section-title { font-size: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
-
 .luca-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.game-card-luca { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: 0.2s; }
-.game-card-luca:hover { border-color: var(--accent); }
-.luca-thumb-wrapper { width: 100%; aspect-ratio: 16/9; position: relative; }
+.game-card-luca { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.luca-thumb-wrapper { width: 100%; aspect-ratio: 16/9; position: relative; background: #000; }
 .luca-thumb { width: 100%; height: 100%; object-fit: cover; }
 
 .playing-badge { position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; display: flex; align-items: center; gap: 5px; }
 .badge-dot { width: 6px; height: 6px; background: #10b981; border-radius: 50%; }
 
-.luca-info { padding: 15px; }
-.luca-info h3 { font-size: 0.9rem; margin: 0 0 5px; }
-.luca-info p { color: var(--text-dim); font-size: 0.75rem; margin: 0; }
-
-.group-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+.group-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
 .group-card { background: var(--card-bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; }
-.group-icon { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
+.group-icon { width: 40px; height: 40px; border-radius: 8px; }
 
 .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-.social-card { background: var(--card-bg); border: 1px solid var(--border); padding: 30px; border-radius: 12px; text-decoration: none; color: #fff; text-align: center; transition: 0.2s; }
-.social-card:hover { border-color: var(--accent); transform: translateY(-3px); }
-.social-card i { color: var(--accent); margin-bottom: 10px; }
+.social-card { background: var(--card-bg); border: 1px solid var(--border); padding: 30px; border-radius: 12px; text-decoration: none; color: #fff; text-align: center; }
 
-@media (max-width: 900px) { .luca-grid, .stats-row, .social-grid { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .luca-grid, .stats-row { grid-template-columns: 1fr; } }
