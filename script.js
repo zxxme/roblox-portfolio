@@ -17,21 +17,27 @@ async function init() {
         document.getElementById('total-visits').innerText = (totalVisits / 1000000).toFixed(1) + "M";
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
-        // Render Games - Mapping specific Universe IDs to your uploaded filenames
+        // Render Games
         document.getElementById('game-container').innerHTML = games.map(game => {
             let thumb = "";
-            
-            // Link each game to its correct uploaded image
-            if (game.id == 9863921361) thumb = "image_2f7141.png"; // Tap Titans
-            else if (game.id == 9561068069) thumb = "image_2fc6fc.png"; // Yeet A Brainrot
-            else if (game.id == 9753920000) thumb = "image_2f6d43.png"; // Pet Collectors
-            else thumb = "image_2fc6fc.png"; // Fallback
+            const name = game.name.toLowerCase();
+
+            // Matching by Name or ID to ensure images actually show up
+            if (name.includes("tap") || game.rootPlaceId == 115206262431806) {
+                thumb = "image_2f7141.png"; // Tap Titans
+            } else if (name.includes("yeet") || name.includes("brainrot")) {
+                thumb = "image_2fc6fc.png"; // Yeet A Brainrot
+            } else if (name.includes("pet") || name.includes("collector")) {
+                thumb = "image_2f6d43.png"; // Pet Collectors
+            } else {
+                thumb = "image_256996.png"; // Your Avatar as fallback
+            }
 
             return `
                 <a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" style="text-decoration:none; color:inherit;">
                     <div class="game-card-luca">
                         <div class="luca-thumb-wrapper">
-                            <img class="luca-thumb" src="${thumb}" alt="${game.name}">
+                            <img class="luca-thumb" src="${thumb}" onerror="this.src='image_256996.png'">
                             <div class="playing-badge">${game.playing.toLocaleString()} playing</div>
                         </div>
                         <div class="luca-info">
@@ -46,15 +52,16 @@ async function init() {
 
         // Render Groups
         document.getElementById('group-container').innerHTML = groupsData.map(group => {
-            let icon = "";
-            if (group.id == 623751942) icon = "image_2f7141.png";
-            else if (group.id == 917252309) icon = "image_2fc6fc.png";
-            else if (group.id == 524021069) icon = "image_2f6d43.png";
-            else icon = "image_256996.png";
+            let icon = "image_256996.png"; // Default to your PFP
+            const gName = group.name.toLowerCase();
+
+            if (gName.includes("tap")) icon = "image_2f7141.png";
+            else if (gName.includes("yeet") || gName.includes("brainrot")) icon = "image_2fc6fc.png";
+            else if (gName.includes("pet")) icon = "image_2f6d43.png";
 
             return `
                 <div class="stat-card" style="display:flex; align-items:center; gap:15px; padding:15px;">
-                    <img src="${icon}" style="width:40px; height:40px; border-radius:8px;">
+                    <img src="${icon}" style="width:40px; height:40px; border-radius:8px;" onerror="this.src='image_256996.png'">
                     <div>
                         <div style="font-size:0.85rem; font-weight:600;">${group.name}</div>
                         <div style="font-size:0.7rem; color:var(--text-dim);">${group.memberCount.toLocaleString()} members</div>
@@ -62,7 +69,7 @@ async function init() {
                 </div>`;
         }).join('');
 
-    } catch (e) { console.error("Error loading dashboard data:", e); }
+    } catch (e) { console.error("Load error:", e); }
 }
 
 document.addEventListener('DOMContentLoaded', init);
