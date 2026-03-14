@@ -1,48 +1,21 @@
-:root {
-    --bg: #03070c;
-    --nav-bg: #0d1117;
-    --card-bg: #0d1117;
-    --border: #1f2937;
-    --accent: #ef4444;
-    --text-dim: #94a3b8;
+/* Make cards look interactable */
+.game-card-luca {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
+.game-card-luca:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
 
-.top-nav { padding: 12px 0; position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
-.nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
-
-.nav-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
-.brand-name { font-weight: 600; color: var(--accent); margin-left: 10px; font-size: 0.9rem; }
-
-.nav-capsule { background: #0f172a; border: 1px solid var(--border); padding: 4px; border-radius: 10px; display: flex; gap: 2px; }
-.nav-link { color: var(--text-dim); padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; cursor: pointer; }
-.nav-link.active { color: #fff; background: #1e293b; }
-
-.refresh-pill { background: transparent; border: 1px solid var(--border); color: #fff; padding: 6px 14px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-
-.page-section { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-.brand-title { font-size: 1.75rem; color: var(--accent); margin-bottom: 5px; }
-.brand-subtitle { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 30px; }
-
-.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 40px; }
-.stat-pill { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; border-radius: 12px; }
-.pill-label { color: var(--text-dim); font-size: 0.75rem; display: block; margin-bottom: 5px; }
-.pill-value { font-size: 1.5rem; font-weight: 700; }
-
-.luca-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.game-card-luca { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-.luca-thumb-wrapper { width: 100%; aspect-ratio: 16/9; position: relative; background: #000; }
-.luca-thumb { width: 100%; height: 100%; object-fit: cover; }
-
-.playing-badge { position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; display: flex; align-items: center; gap: 5px; }
-.badge-dot { width: 6px; height: 6px; background: #10b981; border-radius: 50%; }
-
-.group-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
-.group-card { background: var(--card-bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; }
-.group-icon { width: 40px; height: 40px; border-radius: 8px; }
-
-.social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-.social-card { background: var(--card-bg); border: 1px solid var(--border); padding: 30px; border-radius: 12px; text-decoration: none; color: #fff; text-align: center; }
-
-@media (max-width: 900px) { .luca-grid, .stats-row { grid-template-columns: 1fr; } }
+/* Header Icon Glow */
+.nav-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.4); 
+    border: 1.5px solid rgba(255, 68, 68, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
