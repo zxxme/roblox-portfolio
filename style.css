@@ -53,3 +53,10 @@ footer { margin-top: 100px; text-align: center; padding: 40px; border-top: 1px s
 .tw { background: #1da1f2; }
 .dc { background: #5865f2; }
 .social-btn:hover { opacity: 0.8; transform: scale(1.05); }
+/* Ensure thumbnails and logos display correctly */
+.game-thumb, .group-logo {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    background-color: #000;
+}
