@@ -14,56 +14,51 @@
         <div class="nav-container">
             <div class="nav-left">
                 <img src="./images/miku_logo.png" class="nav-avatar" alt="loxy">
-                <span class="brand-name">loxy</span>
+                <span class="brand-name">loxy's Games</span>
             </div>
             <div class="nav-capsule">
-                <div class="nav-link active" onclick="showSection('dashboard', this)"><i data-lucide="layout"></i> Dashboard</div>
+                <div class="nav-link active" onclick="showSection('dashboard', this)"><i data-lucide="home"></i> Home</div>
+                <div class="nav-link" onclick="showSection('dashboard', this)"><i data-lucide="gamepad-2"></i> Games</div>
                 <div class="nav-link" onclick="showSection('communities', this)"><i data-lucide="users"></i> Community</div>
                 <div class="nav-link" onclick="showSection('socials-page', this)"><i data-lucide="share-2"></i> Socials</div>
             </div>
-            <button class="refresh-pill" onclick="location.reload()"><i data-lucide="refresh-cw"></i></button>
+            <button class="refresh-pill" onclick="location.reload()"><i data-lucide="refresh-cw"></i> Refresh</button>
         </div>
     </nav>
 
     <div class="main-wrapper">
+        <header class="hero-section">
+            <h1 class="hero-title">loxy's Games</h1>
+            <p class="hero-subtitle">Track analytics and performance across all my Roblox creations. View real-time player counts, visit statistics, and community growth.</p>
+        </header>
+
         <main id="dashboard" class="page-section">
             <div class="premium-stats-grid">
                 <div class="stat-card">
-                    <div class="stat-header"><span class="stat-label">Total Games</span><i data-lucide="gamepad-2" class="stat-icon-red"></i></div>
+                    <div class="stat-header"><span class="stat-label">Total Games</span><i data-lucide="gamepad-2" class="icon-red"></i></div>
                     <div class="stat-number">13</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-header"><span class="stat-label">Combined Visits</span><i data-lucide="eye" class="stat-icon-red"></i></div>
+                    <div class="stat-header"><span class="stat-label">Combined Visits</span><i data-lucide="eye" class="icon-red"></i></div>
                     <div class="stat-number" id="total-visits">0M</div>
-                    <div class="stat-graph-container"><canvas id="visit-graph"></canvas></div>
-                    <div class="stat-trend trend-up"><i data-lucide="trending-up"></i> +0.7%</div>
+                    <div class="stat-trend trend-up"><i data-lucide="trending-up"></i> +0.7% <span class="trend-sub">vs last week</span></div>
                 </div>
                 <div class="stat-card" id="playing-card">
-                    <div class="stat-header"><span class="stat-label">Total Playing</span><i data-lucide="users" class="stat-icon-red"></i></div>
+                    <div class="stat-header"><span class="stat-label">Total Playing</span><i data-lucide="users-round" class="icon-red"></i></div>
                     <div class="stat-number" id="total-playing">0</div>
-                    <div class="stat-trend trend-down"><i data-lucide="trending-down"></i> -31.9%</div>
+                    <div class="stat-trend trend-down"><i data-lucide="trending-down"></i> -31.9% <span class="trend-sub">vs last week</span></div>
                 </div>
             </div>
-            <div id="game-container" class="luca-grid"></div>
-        </main>
 
-        <main id="communities" class="page-section" style="display:none;">
-            <h1 class="brand-title">Community Growth</h1>
-            <div id="group-container" class="premium-stats-grid"></div>
-        </main>
-
-        <main id="socials-page" class="page-section" style="display:none;">
-            <h1 class="brand-title">Links</h1>
-            <div class="premium-stats-grid">
-                <a href="https://discord.com/users/346046142674501643" target="_blank" class="stat-card" style="text-decoration:none; color:white; text-align:center;">
-                    <i data-lucide="message-square" style="width:30px; height:30px; margin-bottom:10px;"></i>
-                    <h3>Discord</h3>
-                </a>
-                <a href="https://www.youtube.com/@zxmeplays" target="_blank" class="stat-card" style="text-decoration:none; color:white; text-align:center;">
-                    <i data-lucide="youtube" style="width:30px; height:30px; margin-bottom:10px;"></i>
-                    <h3>YouTube</h3>
-                </a>
+            <div class="section-divider">
+                <h2 class="section-title">All Games</h2>
+                <div class="filter-buttons">
+                    <button class="filter-pill"><i data-lucide="layers"></i> Groups</button>
+                    <button class="filter-pill">Sort by Visits <i data-lucide="chevron-down"></i></button>
+                </div>
             </div>
+            
+            <div id="game-container" class="luca-grid"></div>
         </main>
     </div>
     <script src="script.js"></script>
