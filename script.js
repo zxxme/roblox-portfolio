@@ -17,11 +17,15 @@ async function init() {
         document.getElementById('total-visits').innerText = (totalVisits / 1000000).toFixed(1) + "M";
         document.getElementById('total-playing').innerText = games.reduce((s, g) => s + (g.playing || 0), 0).toLocaleString();
 
-        // Render Games using your uploaded file names
+        // Render Games - Mapping specific Universe IDs to your uploaded filenames
         document.getElementById('game-container').innerHTML = games.map(game => {
-            let thumb = "image_2fc6fc.png"; // Default for Yeet a Brainrot
+            let thumb = "";
+            
+            // Link each game to its correct uploaded image
             if (game.id == 9863921361) thumb = "image_2f7141.png"; // Tap Titans
-            if (game.id == 9753920000) thumb = "image_2f6d43.png"; // Pet Collectors
+            else if (game.id == 9561068069) thumb = "image_2fc6fc.png"; // Yeet A Brainrot
+            else if (game.id == 9753920000) thumb = "image_2f6d43.png"; // Pet Collectors
+            else thumb = "image_2fc6fc.png"; // Fallback
 
             return `
                 <a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" style="text-decoration:none; color:inherit;">
@@ -42,9 +46,11 @@ async function init() {
 
         // Render Groups
         document.getElementById('group-container').innerHTML = groupsData.map(group => {
-            let icon = "image_2fc6fc.png";
+            let icon = "";
             if (group.id == 623751942) icon = "image_2f7141.png";
-            if (group.id == 524021069) icon = "image_2f6d43.png";
+            else if (group.id == 917252309) icon = "image_2fc6fc.png";
+            else if (group.id == 524021069) icon = "image_2f6d43.png";
+            else icon = "image_256996.png";
 
             return `
                 <div class="stat-card" style="display:flex; align-items:center; gap:15px; padding:15px;">
