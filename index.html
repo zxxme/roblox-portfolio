@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>loxy | Dev Dashboard</title>
+    <title>loxy | Dashboard</title>
     <link rel="icon" type="image/png" href="./images/miku_logo.png">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="mouse-glow" id="mouse-glow"></div>
@@ -15,62 +14,63 @@
     <nav class="navbar">
         <div class="nav-content">
             <div class="brand">
-                <div class="logo-box"><img src="./images/miku_logo.png"></div>
+                <div class="logo-circle"><img src="./images/miku_logo.png" alt="loxy"></div>
                 <span>loxy.dev</span>
             </div>
+            
             <div class="nav-pill">
-                <button class="nav-btn active" onclick="tab('dash', this)">Home</button>
-                <button class="nav-btn" onclick="tab('comm', this)">Community</button>
-                <button class="nav-btn" onclick="tab('socs', this)">Socials</button>
+                <button class="nav-item active" onclick="showSection('dashboard', this)">Home</button>
+                <button class="nav-item" onclick="showSection('communities', this)">Community</button>
+                <button class="nav-item" onclick="showSection('socials', this)">Socials</button>
             </div>
-            <button class="refresh-pill" onclick="location.reload()"><i data-lucide="refresh-cw"></i></button>
+
+            <button class="refresh-btn" onclick="location.reload()"><i data-lucide="refresh-cw"></i></button>
         </div>
     </nav>
 
     <div class="container">
-        <section id="dash" class="page active">
-            <div class="hero">
+        <section id="dashboard" class="page-section active">
+            <header class="hero">
                 <h1>loxy's Games</h1>
-                <p>Live performance tracking for all active experiences.</p>
+                <p>Live performance tracking and analytics for all Roblox experiences.</p>
+            </header>
+
+            <div class="stats-grid">
+                <div class="stat-card main-stat">
+                    <div class="card-top"><span>Total Games</span><i data-lucide="gamepad-2"></i></div>
+                    <div class="card-val">13</div>
+                </div>
+                <div class="stat-card main-stat">
+                    <div class="card-top"><span>Combined Visits</span><i data-lucide="eye"></i></div>
+                    <div class="card-val" id="v-count">...</div>
+                </div>
+                <div class="stat-card main-stat">
+                    <div class="card-top"><span>Active Now</span><i data-lucide="users"></i></div>
+                    <div class="card-val" id="p-count">...</div>
+                </div>
             </div>
 
-            <div class="stats-row">
-                <div class="stat-card">
-                    <div class="stat-top"><span>Total Games</span><i data-lucide="gamepad-2"></i></div>
-                    <div class="stat-val">13</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-top"><span>Combined Visits</span><i data-lucide="eye"></i></div>
-                    <div class="stat-val" id="v-total">...</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-top"><span>Active Now</span><i data-lucide="users"></i></div>
-                    <div class="stat-val" id="p-total">...</div>
-                </div>
-            </div>
-
-            <h2 class="section-label">All Experiences</h2>
+            <h2 class="sub-label">All Experiences</h2>
             <div id="game-grid" class="bento-grid">
-                <p class="loading-text">Fetching games from Roblox...</p>
-            </div>
+                </div>
         </section>
 
-        <section id="comm" class="page">
-            <div class="hero"><h1>Community</h1><p>Group metrics and member growth.</p></div>
-            <div class="stats-row">
+        <section id="communities" class="page-section">
+            <header class="hero"><h1>Community</h1><p>Monitoring growth and engagement.</p></header>
+            <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-top"><span>Total Members</span><i data-lucide="heart"></i></div>
-                    <div class="stat-val">0</div>
+                    <div class="card-top"><span>Group Members</span><i data-lucide="users"></i></div>
+                    <div class="card-val">0</div>
                 </div>
             </div>
         </section>
 
-        <section id="socs" class="page">
-            <div class="hero"><h1>Social Links</h1><p>Find me elsewhere.</p></div>
+        <section id="socials" class="page-section">
+            <header class="hero"><h1>Social Links</h1><p>Connect with me elsewhere.</p></header>
             <div class="bento-grid">
-                <a href="#" class="stat-card social-link"><i data-lucide="message-circle"></i> Discord</a>
-                <a href="#" class="stat-card social-link"><i data-lucide="youtube"></i> YouTube</a>
-                <a href="#" class="stat-card social-link"><i data-lucide="twitter"></i> Twitter</a>
+                <a href="YOUR_LINK" class="stat-card social-link"><i data-lucide="message-circle"></i> Discord</a>
+                <a href="YOUR_LINK" class="stat-card social-link"><i data-lucide="youtube"></i> YouTube</a>
+                <a href="YOUR_LINK" class="stat-card social-link"><i data-lucide="twitter"></i> Twitter / X</a>
             </div>
         </section>
     </div>
