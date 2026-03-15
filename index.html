@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="./images/miku_logo.png">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="mouse-glow" id="mouse-glow"></div>
@@ -15,9 +15,7 @@
     <nav class="navbar">
         <div class="nav-content">
             <div class="brand">
-                <div class="logo-wrapper">
-                    <img src="./images/miku_logo.png" alt="loxy">
-                </div>
+                <div class="logo-circle"><img src="./images/miku_logo.png"></div>
                 <span>loxy.dev</span>
             </div>
             
@@ -27,59 +25,63 @@
                 <button class="nav-item" onclick="showSection('socials', this)">Socials</button>
             </div>
 
-            <button class="refresh-btn" onclick="location.reload()">
-                <i data-lucide="refresh-cw"></i>
-            </button>
+            <button class="refresh-btn" onclick="location.reload()"><i data-lucide="refresh-cw"></i></button>
         </div>
     </nav>
 
-    <div class="main-container">
+    <div class="container">
         <section id="dashboard" class="page-section active">
             <header class="hero">
-                <h1 class="glitch-text">loxy's Games</h1>
-                <p>Real-time analytics across all Roblox experiences. Monitoring visits, active players, and engagement metrics.</p>
+                <h1>loxy's Games</h1>
+                <p>Tracking real-time analytics across all Roblox experiences. Built for performance.</p>
             </header>
 
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="card-inner">
-                        <div class="card-info">
-                            <span class="card-label">Total Games</span>
-                            <div class="card-value">13</div>
-                        </div>
-                        <i data-lucide="gamepad-2" class="red-icon"></i>
-                    </div>
+                    <div class="card-top"><span>Total Games</span><i data-lucide="gamepad-2"></i></div>
+                    <div class="card-val">13</div>
                 </div>
                 <div class="stat-card">
-                    <div class="card-inner">
-                        <div class="card-info">
-                            <span class="card-label">Combined Visits</span>
-                            <div class="card-value" id="v-count">0.0M</div>
-                            <div class="trend up"><i data-lucide="trending-up"></i> +0.7% <small>vs last week</small></div>
-                        </div>
-                        <i data-lucide="eye" class="red-icon"></i>
-                    </div>
+                    <div class="card-top"><span>Combined Visits</span><i data-lucide="eye"></i></div>
+                    <div class="card-val" id="v-count">0.0M</div>
+                    <div class="trend up"><i data-lucide="trending-up"></i> +0.7%</div>
                 </div>
                 <div class="stat-card">
-                    <div class="card-inner">
-                        <div class="card-info">
-                            <span class="card-label">Total Playing</span>
-                            <div class="card-value" id="p-count">0</div>
-                            <div class="trend down"><i data-lucide="trending-down"></i> -31.9% <small>vs last week</small></div>
-                        </div>
-                        <i data-lucide="users" class="red-icon"></i>
-                    </div>
+                    <div class="card-top"><span>Total Playing</span><i data-lucide="users"></i></div>
+                    <div class="card-val" id="p-count">0</div>
+                    <div class="trend down"><i data-lucide="trending-down"></i> -31.9%</div>
                 </div>
             </div>
 
-            <div class="grid-header">
-                <h2>All Experiences</h2>
-            </div>
-            <div id="game-grid" class="game-grid"></div>
+            <h2 class="sub-head">All Experiences</h2>
+            <div id="game-grid" class="item-grid"></div>
         </section>
 
-        <section id="communities" class="page-section"><h1>Community</h1></section>
-        <section id="socials" class="page-section"><h1>Socials</h1></section>
+        <section id="communities" class="page-section">
+            <header class="hero">
+                <h1>Community</h1>
+                <p>Group growth and community engagement metrics.</p>
+            </header>
+            <div class="item-grid">
+                <div class="stat-card community-card">
+                    <div class="card-top"><span>Main Group</span><i data-lucide="users"></i></div>
+                    <div class="card-val">0</div>
+                    <p class="dim">Total Members</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="socials" class="page-section">
+            <header class="hero">
+                <h1>Socials</h1>
+                <p>Connect with me on other platforms.</p>
+            </header>
+            <div class="item-grid">
+                <a href="#" class="stat-card social-card"><i data-lucide="message-circle"></i><span>Discord</span></a>
+                <a href="#" class="stat-card social-card"><i data-lucide="youtube"></i><span>YouTube</span></a>
+                <a href="#" class="stat-card social-card"><i data-lucide="twitter"></i><span>Twitter / X</span></a>
+            </div>
+        </section>
     </div>
 
     <script src="script.js"></script>
