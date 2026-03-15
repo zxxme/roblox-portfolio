@@ -4,52 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>loxy | Dashboard</title>
-    <link rel="icon" type="image/png" href="./images/miku_logo.png">
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <div class="mouse-glow" id="mouse-glow"></div>
     <nav class="navbar">
         <div class="nav-content">
-            <div class="logo-wrapper"><img src="./images/miku_logo.png"></div>
+            <div style="font-weight:800; font-size:20px; color:var(--red);">loxy.dev</div>
             <div class="nav-pill">
-                <button class="nav-item active" onclick="showTab('dash', this)">Home</button>
-                <button class="nav-item" onclick="showTab('comm', this)">Community</button>
-                <button class="nav-item" onclick="showTab('socs', this)">Socials</button>
+                <button class="nav-item active" onclick="showTab('home', this)">Home</button>
+                <button class="nav-item" onclick="showTab('community', this)">Community</button>
+                <button class="nav-item" onclick="showTab('socials', this)">Socials</button>
             </div>
-            <button class="nav-item" style="border:1px solid #181818" onclick="location.reload()">Refresh</button>
+            <button class="nav-item" onclick="location.reload()">Refresh</button>
         </div>
     </nav>
 
     <div class="container">
-        <section id="dash" class="tab-content active">
-            <div class="hero-section"><h1>loxy's Games</h1><p>Real-time analytics across all studio experiences.</p></div>
-            <div class="bento-grid">
-                <div class="bento-card">
-                    <span class="label">Combined Visits</span>
-                    <div class="value" id="v-total">...</div>
-                </div>
-                <div class="bento-card">
-                    <span class="label">Total Playing</span>
-                    <div class="value" id="p-total">...</div>
-                </div>
-            </div>
-            <h2 class="label">Live Experiences</h2>
+        <section id="home" class="page active">
+            <h1 style="font-size:48px; margin-bottom:10px; letter-spacing:-2px;">loxy's Games</h1>
+            <p style="color:var(--dim);">Real-time tracking for active experiences.</p>
             <div id="game-grid" class="bento-grid"></div>
         </section>
 
-        <section id="comm" class="tab-content">
-            <div class="hero-section"><h1>Community</h1><p>Monitoring growth across our groups.</p></div>
+        <section id="community" class="page">
+            <h1 style="font-size:48px; margin-bottom:10px;">Community</h1>
             <div id="group-grid" class="bento-grid"></div>
         </section>
 
-        <section id="socs" class="tab-content">
-            <div class="hero-section"><h1>Socials</h1><p>Join our external communities.</p></div>
+        <section id="socials" class="page">
+            <h1 style="font-size:48px; margin-bottom:40px;">Social Links</h1>
             <div class="bento-grid">
-                <a href="#" class="bento-card social-card"><i data-lucide="message-square" style="color:#5865F2"></i> <span>Discord</span></a>
-                <a href="#" class="bento-card social-card"><i data-lucide="youtube" style="color:#FF0000"></i> <span>YouTube</span></a>
-                <a href="#" class="bento-card social-card"><i data-lucide="twitter" style="color:#1DA1F2"></i> <span>Twitter</span></a>
+                <a href="#" class="bento-card"><h3>Discord</h3></a>
+                <a href="#" class="bento-card"><h3>YouTube</h3></a>
             </div>
         </section>
     </div>
