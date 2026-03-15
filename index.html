@@ -10,76 +10,53 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="top-nav">
-        <div class="nav-container">
-            <div class="nav-left">
-                <div class="miku-container">
-                    <img src="./images/miku_logo.png" alt="loxy">
-                </div>
-                <span class="brand-name">loxy.dev</span>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="brand">
+                <img src="./images/miku_logo.png" class="miku-icon" alt="loxy">
+                <span>loxy.dev</span>
             </div>
-            
-            <div class="nav-capsule">
-                <button class="nav-btn active" onclick="showSection('dashboard', this)">Home</button>
-                <button class="nav-btn" onclick="showSection('communities', this)">Community</button>
-                <button class="nav-btn" onclick="showSection('socials', this)">Socials</button>
+            <div class="nav-pill">
+                <button class="nav-item active" onclick="showSection('dashboard', this)">Home</button>
+                <button class="nav-item" onclick="showSection('communities', this)">Community</button>
+                <button class="nav-item" onclick="showSection('socials', this)">Socials</button>
             </div>
-
-            <button class="refresh-pill" onclick="location.reload()"><i data-lucide="refresh-cw"></i></button>
+            <div class="nav-right">
+                <button class="icon-btn" onclick="location.reload()"><i data-lucide="refresh-cw"></i></button>
+            </div>
         </div>
     </nav>
 
-    <div class="main-wrapper">
+    <div class="container">
         <main id="dashboard" class="page-section">
-            <header class="hero">
-                <h1 class="hero-red">loxy's Games</h1>
-                <p class="hero-sub">Track analytics and performance across all my Roblox experiences. View real-time player counts, visit statistics, and community growth.</p>
+            <header class="hero-header">
+                <h1 class="accent-text">loxy's Games</h1>
+                <p>Track analytics and performance across all my Roblox experiences. View real-time player counts, visit statistics, and community growth.</p>
             </header>
 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-inner">
-                        <div>
-                            <span class="label">Total Games</span>
-                            <div class="number">13</div>
-                        </div>
-                        <i data-lucide="gamepad-2" class="icon-red"></i>
-                    </div>
+            <div class="stats-row">
+                <div class="card stat-card">
+                    <div class="card-head"><span>Total Games</span><i data-lucide="gamepad-2" class="red"></i></div>
+                    <div class="card-body">13</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-inner">
-                        <div>
-                            <span class="label">Combined Visits</span>
-                            <div class="number" id="v-total">0.0M</div>
-                            <span class="trend trend-up"><i data-lucide="trending-up"></i> +0.7% <span class="dim">vs last week</span></span>
-                        </div>
-                        <i data-lucide="eye" class="icon-red"></i>
-                    </div>
+                <div class="card stat-card">
+                    <div class="card-head"><span>Combined Visits</span><i data-lucide="eye" class="red"></i></div>
+                    <div class="card-body" id="v-total">0.0M</div>
+                    <div class="card-foot"><span class="trend up"><i data-lucide="trending-up"></i> +0.7%</span> <span class="dim">vs last week</span></div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-inner">
-                        <div>
-                            <span class="label">Total Playing</span>
-                            <div class="number" id="p-total">0</div>
-                            <span class="trend trend-down"><i data-lucide="trending-down"></i> -31.9% <span class="dim">vs last week</span></span>
-                        </div>
-                        <i data-lucide="users" class="icon-red"></i>
-                    </div>
+                <div class="card stat-card">
+                    <div class="card-head"><span>Total Playing</span><i data-lucide="users" class="red"></i></div>
+                    <div class="card-body" id="p-total">0</div>
+                    <div class="card-foot"><span class="trend down"><i data-lucide="trending-down"></i> -31.9%</span> <span class="dim">vs last week</span></div>
                 </div>
             </div>
 
-            <div class="divider">
+            <div class="section-title">
                 <h2>All Experiences</h2>
             </div>
-
-            <div id="game-grid" class="game-grid">
-                </div>
+            <div id="game-grid" class="game-grid"></div>
         </main>
-
-        <main id="communities" class="page-section" style="display:none;"><h1 class="hero-red">Community</h1></main>
-        <main id="socials" class="page-section" style="display:none;"><h1 class="hero-red">Social Links</h1></main>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
