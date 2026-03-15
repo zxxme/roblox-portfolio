@@ -1,37 +1,43 @@
-const UNIVERSE_IDS = [9753920000, 9863921361, 9561068069];
+const IDS = [9753920000, 9863921361, 9561068069];
 
-async function updateDash() {
+// Mouse Glow Effect
+const glow = document.getElementById('mouse-glow');
+document.addEventListener('mousemove', (e) => {
+    glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+});
+
+// Section Toggle (Fixes broken buttons)
+function showSection(id, btn) {
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+async function init() {
     try {
-        const response = await fetch(`https://games.roproxy.com/v1/games?universeIds=${UNIVERSE_IDS.join(",")}`);
-        const data = await response.json();
-        const games = data.data || [];
+        const res = await fetch(`https://games.roproxy.com/v1/games?universeIds=${IDS.join(",")}`);
+        const { data } = await res.json();
+        if (!data) return;
 
-        // Update Numbers
-        const visits = games.reduce((a, b) => a + (b.visits || 0), 0);
-        const playing = games.reduce((a, b) => a + (b.playing || 0), 0);
-        
-        document.getElementById('v-total').innerText = (visits / 1000000).toFixed(1) + "M";
-        document.getElementById('p-total').innerText = playing.toLocaleString();
+        // Totals
+        const v = data.reduce((a, b) => a + (b.visits || 0), 0);
+        const p = data.reduce((a, b) => a + (b.playing || 0), 0);
+        document.getElementById('v-count').innerText = (v / 1000000).toFixed(1) + "M";
+        document.getElementById('p-count').innerText = p.toLocaleString();
 
-        // Render Cards
-        const grid = document.getElementById('game-grid');
-        grid.innerHTML = games.map(game => `
-            <div class="card game-card" onclick="window.open('https://www.roblox.com/games/${game.rootPlaceId}')">
-                <h3 style="margin:0; font-size:16px;">${game.name}</h3>
-                <p style="color:#666; font-size:13px; margin:8px 0;">${game.visits.toLocaleString()} Visits</p>
-                <div class="playing-tag"><span class="dot"></span> ${game.playing} playing</div>
+        // Cards
+        document.getElementById('game-grid').innerHTML = data.map(g => `
+            <div class="game-card" onclick="window.open('https://roblox.com/games/${g.rootPlaceId}')">
+                <h3 style="margin:0; font-size:18px;">${g.name}</h3>
+                <p style="color:#666; font-size:13px; margin:10px 0;">${g.visits.toLocaleString()} Visits</p>
+                <div class="playing-badge"><div class="pulse-dot"></div> ${g.playing} Playing</div>
             </div>
         `).join('');
 
         lucide.createIcons();
-    } catch (e) { console.error("Error loading games", e); }
+    } catch (err) { console.error("Site Error:", err); }
 }
 
-function showSection(id, el) {
-    document.querySelectorAll('.page-section').forEach(s => s.style.display = 'none');
-    document.getElementById(id).style.display = 'block';
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-}
-
-document.addEventListener('DOMContentLoaded', updateDash);
+document.addEventListener('DOMContentLoaded', init);
