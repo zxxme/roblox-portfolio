@@ -1,64 +1,60 @@
-// CRITICAL: Replace these with UNIVERSE IDs (Go to Roblox Creator Dashboard -> Three Dots -> Copy Universe ID)
-const UNIVERSE_IDS = [9753920000, 9863921361, 9561068069]; 
+const UNIVERSE_IDS = [9753920000, 9863921361, 9561068069];
 
-// Mouse Glow
+// Tab System
+function showTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+// Mouse Follower
 const glow = document.getElementById('mouse-glow');
 document.addEventListener('mousemove', (e) => {
     glow.style.left = e.clientX + 'px';
     glow.style.top = e.clientY + 'px';
 });
 
-// Navigation
-function showSection(id, btn) {
-    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    window.scrollTo(0,0);
-}
-
-async function refresh() {
+async function loadRobloxData() {
     const grid = document.getElementById('game-grid');
-    const vDisplay = document.getElementById('v-count');
-    const pDisplay = document.getElementById('p-count');
+    const vTotal = document.getElementById('v-total');
+    const pTotal = document.getElementById('p-total');
 
     try {
-        const response = await fetch(`https://games.roproxy.com/v1/games?universeIds=${UNIVERSE_IDS.join(",")}`);
-        const result = await response.json();
+        const url = `https://games.roproxy.com/v1/games?universeIds=${UNIVERSE_IDS.join(",")}`;
+        const res = await fetch(url);
+        const { data } = await res.json();
 
-        if (!result.data || result.data.length === 0) {
-            grid.innerHTML = `
-                <div style="grid-column: 1/-1; padding: 40px; border: 2px dashed #1c1c21; border-radius: 24px; text-align: center;">
-                    <p style="color: var(--red); font-weight: 800; font-size: 20px;">No Games Found</p>
-                    <p style="color: var(--dim); font-size: 14px; margin-top: 10px;">The IDs in your script might be <b>Place IDs</b>. You need <b>Universe IDs</b>.</p>
-                </div>`;
+        if (!data || data.length === 0) {
+            grid.innerHTML = `<p style="color:var(--dim)">Fetching data from Roblox API...</p>`;
+            // Retry in 3 seconds if empty
+            setTimeout(loadRobloxData, 3000);
             return;
         }
 
-        const games = result.data;
+        // Calculate Totals
+        const visits = data.reduce((a, b) => a + (b.visits || 0), 0);
+        const playing = data.reduce((a, b) => a + (b.playing || 0), 0);
 
-        // Stats
-        const visits = games.reduce((a, b) => a + (b.visits || 0), 0);
-        const playing = games.reduce((a, b) => a + (b.playing || 0), 0);
+        vTotal.innerText = visits >= 1000000 ? (visits / 1000000).toFixed(1) + "M" : visits.toLocaleString();
+        pTotal.innerText = playing.toLocaleString();
 
-        vDisplay.innerText = visits >= 1000000 ? (visits / 1000000).toFixed(1) + "M" : visits.toLocaleString();
-        pDisplay.innerText = playing.toLocaleString();
-
-        // Cards
-        grid.innerHTML = games.map(g => `
-            <div class="stat-card" onclick="window.open('https://roblox.com/games/${g.rootPlaceId}')" style="cursor:pointer">
-                <div class="card-top"><span>Experience</span><i data-lucide="external-link"></i></div>
-                <h3 style="margin:20px 0 5px; font-size:20px; font-weight:800; letter-spacing:-0.5px;">${g.name}</h3>
-                <p style="color:var(--dim); font-size:14px;">${g.visits.toLocaleString()} Visits</p>
-                <div class="status"><div class="dot"></div>${g.playing} Playing</div>
+        // Build Game Cards
+        grid.innerHTML = data.map(game => `
+            <div class="bento-card" onclick="window.open('https://roblox.com/games/${game.rootPlaceId}')" style="cursor:pointer">
+                <span style="color:var(--dim); font-size:12px; font-weight:700;">EXPERIENCE</span>
+                <h3 style="margin:10px 0 5px; font-size:22px; font-weight:800;">${game.name}</h3>
+                <p style="color:var(--dim); font-size:14px;">${game.visits.toLocaleString()} Visits</p>
+                <div class="badge"><div class="dot"></div> ${game.playing} Active</div>
             </div>
         `).join('');
 
-        lucide.createIcons();
+        if (window.lucide) lucide.createIcons();
 
-    } catch (err) {
-        grid.innerHTML = `<p style="color: var(--red)">Connection failed. The proxy might be offline.</p>`;
+    } catch (e) {
+        grid.innerHTML = `<p style="color:red">Proxy Error. Retrying...</p>`;
+        setTimeout(loadRobloxData, 5000);
     }
 }
 
-document.addEventListener('DOMContentLoaded', refresh);
+document.addEventListener('DOMContentLoaded', loadRobloxData);

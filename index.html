@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="./images/miku_logo.png">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="mouse-glow" id="mouse-glow"></div>
@@ -14,63 +15,63 @@
     <nav class="navbar">
         <div class="nav-content">
             <div class="brand">
-                <div class="logo-circle"><img src="./images/miku_logo.png" alt="loxy"></div>
+                <div class="logo-wrapper"><img src="./images/miku_logo.png"></div>
                 <span>loxy.dev</span>
             </div>
             
             <div class="nav-pill">
-                <button class="nav-item active" onclick="showSection('dashboard', this)">Home</button>
-                <button class="nav-item" onclick="showSection('communities', this)">Community</button>
-                <button class="nav-item" onclick="showSection('socials', this)">Socials</button>
+                <button class="nav-item active" onclick="showTab('dash', this)">Home</button>
+                <button class="nav-item" onclick="showTab('comm', this)">Community</button>
+                <button class="nav-item" onclick="showTab('socs', this)">Socials</button>
             </div>
 
-            <button class="refresh-btn" onclick="location.reload()"><i data-lucide="refresh-cw"></i></button>
+            <button class="refresh-pill" onclick="location.reload()"><i data-lucide="refresh-cw"></i></button>
         </div>
     </nav>
 
-    <div class="container">
-        <section id="dashboard" class="page-section active">
-            <header class="hero">
+    <div class="main-wrapper">
+        <section id="dash" class="tab-content active">
+            <header class="hero-section">
                 <h1>loxy's Games</h1>
-                <p>Live performance tracking and analytics for all Roblox experiences.</p>
+                <p>Tracking live performance and engagement metrics for all experiences.</p>
             </header>
 
-            <div class="stats-grid">
-                <div class="stat-card main-stat">
-                    <div class="card-top"><span>Total Games</span><i data-lucide="gamepad-2"></i></div>
-                    <div class="card-val">13</div>
+            <div class="bento-row">
+                <div class="bento-card stat">
+                    <span class="label">Total Games</span>
+                    <div class="value">13</div>
                 </div>
-                <div class="stat-card main-stat">
-                    <div class="card-top"><span>Combined Visits</span><i data-lucide="eye"></i></div>
-                    <div class="card-val" id="v-count">...</div>
+                <div class="bento-card stat">
+                    <span class="label">Combined Visits</span>
+                    <div class="value" id="v-total">0.0M</div>
                 </div>
-                <div class="stat-card main-stat">
-                    <div class="card-top"><span>Active Now</span><i data-lucide="users"></i></div>
-                    <div class="card-val" id="p-count">...</div>
+                <div class="bento-card stat">
+                    <span class="label">Total Playing</span>
+                    <div class="value" id="p-total">0</div>
                 </div>
             </div>
 
-            <h2 class="sub-label">All Experiences</h2>
-            <div id="game-grid" class="bento-grid">
+            <h2 class="sub-label">My Experiences</h2>
+            <div id="game-grid" class="game-grid">
                 </div>
         </section>
 
-        <section id="communities" class="page-section">
-            <header class="hero"><h1>Community</h1><p>Monitoring growth and engagement.</p></header>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="card-top"><span>Group Members</span><i data-lucide="users"></i></div>
-                    <div class="card-val">0</div>
+        <section id="comm" class="tab-content">
+            <header class="hero-section"><h1>Community</h1><p>Our growth across groups and platforms.</p></header>
+            <div class="bento-row">
+                <div class="bento-card stat">
+                    <span class="label">Group Members</span>
+                    <div class="value">0</div>
                 </div>
             </div>
         </section>
 
-        <section id="socials" class="page-section">
-            <header class="hero"><h1>Social Links</h1><p>Connect with me elsewhere.</p></header>
-            <div class="bento-grid">
-                <a href="YOUR_LINK" class="stat-card social-link"><i data-lucide="message-circle"></i> Discord</a>
-                <a href="YOUR_LINK" class="stat-card social-link"><i data-lucide="youtube"></i> YouTube</a>
-                <a href="YOUR_LINK" class="stat-card social-link"><i data-lucide="twitter"></i> Twitter / X</a>
+        <section id="socs" class="tab-content">
+            <header class="hero-section"><h1>Socials</h1><p>Connect with the dev team.</p></header>
+            <div class="game-grid">
+                <a href="#" class="bento-card social"><i data-lucide="message-circle"></i> Discord</a>
+                <a href="#" class="bento-card social"><i data-lucide="youtube"></i> YouTube</a>
+                <a href="#" class="bento-card social"><i data-lucide="twitter"></i> Twitter</a>
             </div>
         </section>
     </div>
