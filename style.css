@@ -1,59 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+/* Add/Update these specific classes in your style.css */
 
-:root {
-    --bg: #000000;
-    --card: #080808;
-    --border: #181818;
-    --red: #ff3b3b;
-    --green: #00ff88;
-    --text: #ffffff;
-    --dim: #666666;
-    --radius: 30px;
+.thumb-wrapper {
+    width: 100%;
+    height: 180px;
+    background: #111; /* Dark placeholder while loading */
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border: 1px solid var(--border);
 }
 
-body {
-    background: var(--bg); color: var(--text);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    margin: 0; padding-top: 100px; overflow-x: hidden;
+.game-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
-.mouse-glow {
-    position: fixed; top: 0; left: 0; width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(255, 59, 59, 0.05) 0%, transparent 70%);
-    border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); z-index: 0;
+.bento-card:hover .game-thumb {
+    transform: scale(1.05);
 }
 
-.navbar { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-.nav-content { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 20px; }
-.nav-pill { background: #0c0c0c; border: 1px solid var(--border); border-radius: 100px; padding: 5px; display: flex; gap: 5px; }
-.nav-item { background: transparent; border: none; color: var(--dim); padding: 10px 22px; border-radius: 100px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; }
-.nav-item.active { background: #1a1a1a; color: #fff; }
-
-.logo-wrapper { width: 34px; height: 34px; border-radius: 50%; border: 2.5px solid var(--red); overflow: hidden; margin-right: 12px; }
-.logo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-
-.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 10; }
-.hero-section h1 { font-size: 56px; font-weight: 800; color: var(--red); margin: 0; letter-spacing: -3px; }
-.hero-section p { color: var(--dim); margin: 10px 0 40px; font-size: 16px; max-width: 500px; }
-
-.bento-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-bottom: 50px; }
-.bento-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 25px; transition: 0.3s cubic-bezier(0.2, 0, 0.2, 1); cursor: pointer; text-decoration: none; color: inherit; }
-.bento-card:hover { border-color: #333; transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-
-.game-thumb { width: 100%; height: 180px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; border: 1px solid #111; }
-.game-title, .group-title { margin: 10px 0 5px; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
-.label { color: var(--dim); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
-.value { font-size: 48px; font-weight: 800; margin-top: 10px; }
-.value.small { font-size: 32px; }
-
-.group-icon { width: 60px; height: 60px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 15px; }
-
-.badge { display: flex; align-items: center; gap: 8px; color: var(--green); font-size: 13px; font-weight: 800; margin-top: 15px; }
-.dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); }
-
-.social-card { display: flex; align-items: center; gap: 15px; padding: 30px; }
-.social-card i { width: 28px; height: 28px; }
-
-.tab-content { display: none; }
-.tab-content.active { display: block; animation: fadeUp 0.4s ease-out; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.group-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    margin-bottom: 15px;
+    background: #111;
+}
