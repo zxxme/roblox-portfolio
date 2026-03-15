@@ -3,42 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>loxy | Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <title>loxy | Dev Dashboard</title>
+    <link rel="icon" type="image/png" href="./images/miku_logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg: #050505;
+            --card: #0d0d0f;
+            --border: #1c1c21;
+            --red: #ff4747;
+            --green: #00e676;
+            --text: #ffffff;
+            --dim: #71717a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.5;
+            padding-top: 100px;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* Navbar */
+        .navbar {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(5,5,5,0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-content {
+            max-width: 1100px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; padding: 15px 24px;
+        }
+        .nav-pill {
+            background: #111; border: 1px solid var(--border);
+            padding: 5px; border-radius: 100px; display: flex; gap: 5px;
+        }
+        .nav-btn {
+            background: transparent; border: none; color: var(--dim);
+            padding: 8px 20px; border-radius: 100px; cursor: pointer;
+            font-weight: 600; font-size: 14px; transition: 0.2s;
+        }
+        .nav-btn.active { background: #1c1c21; color: #fff; }
+
+        /* Hero */
+        .hero h1 { font-size: clamp(32px, 5vw, 56px); font-weight: 800; letter-spacing: -2px; color: var(--red); }
+        .hero p { color: var(--dim); margin-bottom: 40px; }
+
+        /* Bento Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        
+        .card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 24px; padding: 20px; transition: 0.3s;
+            text-decoration: none; color: inherit; display: block;
+        }
+        .card:hover { border-color: #444; transform: translateY(-5px); }
+
+        .thumb-box {
+            width: 100%; height: 170px; border-radius: 16px;
+            background: #16161a; margin-bottom: 15px; overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .thumb-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .label { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--dim); letter-spacing: 1px; }
+        .title { font-size: 20px; font-weight: 800; margin: 4px 0 12px; }
+
+        /* Status Badge */
+        .status { display: flex; align-items: center; gap: 6px; color: var(--green); font-size: 13px; font-weight: 700; }
+        .dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); }
+
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-content">
-            <div style="font-weight:800; font-size:20px; color:var(--red);">loxy.dev</div>
+            <div style="font-weight:800; font-size:20px;">loxy<span style="color:var(--red);">.dev</span></div>
             <div class="nav-pill">
-                <button class="nav-item active" onclick="showTab('home', this)">Home</button>
-                <button class="nav-item" onclick="showTab('community', this)">Community</button>
-                <button class="nav-item" onclick="showTab('socials', this)">Socials</button>
+                <button class="nav-btn active" onclick="tab('dash', this)">Home</button>
+                <button class="nav-btn" onclick="tab('comm', this)">Community</button>
+                <button class="nav-btn" onclick="tab('socs', this)">Socials</button>
             </div>
-            <button class="nav-item" onclick="location.reload()">Refresh</button>
+            <button class="nav-btn" onclick="location.reload()" style="border:1px solid var(--border)">Refresh</button>
         </div>
     </nav>
 
     <div class="container">
-        <section id="home" class="page active">
-            <h1 style="font-size:48px; margin-bottom:10px; letter-spacing:-2px;">loxy's Games</h1>
-            <p style="color:var(--dim);">Real-time tracking for active experiences.</p>
-            <div id="game-grid" class="bento-grid"></div>
+        <section id="dash" class="page active">
+            <div class="hero">
+                <h1>loxy's Games</h1>
+                <p>Live analytics for 13 experiences.</p>
+            </div>
+            <div id="game-grid" class="grid">
+                <p style="color:var(--dim)">Loading games...</p>
+            </div>
         </section>
 
-        <section id="community" class="page">
-            <h1 style="font-size:48px; margin-bottom:10px;">Community</h1>
-            <div id="group-grid" class="bento-grid"></div>
+        <section id="comm" class="page">
+            <div class="hero"><h1>Communities</h1><p>Member growth across our groups.</p></div>
+            <div id="group-grid" class="grid"></div>
         </section>
 
-        <section id="socials" class="page">
-            <h1 style="font-size:48px; margin-bottom:40px;">Social Links</h1>
-            <div class="bento-grid">
-                <a href="#" class="bento-card"><h3>Discord</h3></a>
-                <a href="#" class="bento-card"><h3>YouTube</h3></a>
+        <section id="socs" class="page">
+            <div class="hero"><h1>Socials</h1><p>Find us on other platforms.</p></div>
+            <div class="grid">
+                <a href="#" class="card"><h3>Discord</h3><p style="color:var(--dim)">Join the chat</p></a>
+                <a href="#" class="card"><h3>YouTube</h3><p style="color:var(--dim)">Watch devlogs</p></a>
             </div>
         </section>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        const UNIVERSE_IDS = [9753920000, 9863921361, 9561068069];
+        const GROUP_IDS = [623751942, 524021069, 917252309];
+
+        function tab(id, btn) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        async function load() {
+            try {
+                // Games
+                const gRes = await fetch(`https://games.roproxy.com/v1/games?universeIds=${UNIVERSE_IDS.join(",")}`);
+                const { data: games } = await gRes.json();
+                if(games) {
+                    document.getElementById('game-grid').innerHTML = games.map(g => `
+                        <a href="https://roblox.com/games/${g.rootPlaceId}" target="_blank" class="card">
+                            <div class="thumb-box">
+                                <img src="https://thumbnails.roproxy.com/v1/games/icons?universeIds=${g.id}&size=512x512&format=Png&isCircular=false" onerror="this.src='./images/miku_logo.png'">
+                            </div>
+                            <span class="label">Experience</span>
+                            <h3 class="title">${g.name}</h3>
+                            <div class="status"><div class="dot"></div>${g.playing} Playing</div>
+                        </a>
+                    `).join('');
+                }
+
+                // Groups
+                const groupPromises = GROUP_IDS.map(id => fetch(`https://groups.roproxy.com/v1/groups/${id}`).then(r => r.json()));
+                const groups = await Promise.all(groupPromises);
+                document.getElementById('group-grid').innerHTML = groups.map(group => `
+                    <div class="card">
+                        <img src="https://thumbnails.roproxy.com/v1/groups/icons?groupIds=${group.id}&size=150x150&format=Png" style="width:50px; border-radius:10px; margin-bottom:10px;">
+                        <span class="label">Community</span>
+                        <h3 class="title">${group.name}</h3>
+                        <p style="font-size:28px; font-weight:800;">${group.memberCount.toLocaleString()}</p>
+                        <span class="label">Total Members</span>
+                    </div>
+                `).join('');
+            } catch(e) { console.error(e); }
+        }
+
+        document.addEventListener('DOMContentLoaded', load);
+    </script>
 </body>
 </html>
