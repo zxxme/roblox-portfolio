@@ -14,19 +14,19 @@ document.querySelectorAll('.nav-pill .nav-item').forEach(btn => {
     });
 });
 
-// Format Numbers (e.g. 10000 -> 10,000)
+// Format Numbers (e.g. 1000000 -> 1M, or 10,000)
 function formatNumber(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+    return num.toString();
 }
 
-// Fetch Data
 async function init() {
     try {
         // --- FETCH GAMES ---
         if (UNIVERSE_IDS.length > 0) {
             const universeQuery = UNIVERSE_IDS.join(',');
             
-            // Fixed URLs to include the variables
             const gRes = await fetch(`https://games.roproxy.com/v1/games?universeIds=${universeQuery}`);
             const { data: games } = await gRes.json();
             
@@ -37,7 +37,13 @@ async function init() {
                 document.getElementById('game-grid').innerHTML = games.map(g => {
                     const thumbData = thumbs.find(t => t.targetId === g.id);
                     const thumbUrl = thumbData ? thumbData.imageUrl : LOGO_FALLBACK;
+                    
                     const playingCount = g.playing ? formatNumber(g.playing) : "0";
+                    const visitsCount = g.visits ? formatNumber(g.visits) : "0";
+                    
+                    // Shorten description so it doesn't break the card size
+                    let descText = g.description || "No description provided.";
+                    if (descText.length > 70) descText = descText.substring(0, 70) + "...";
                     
                     return `
                         <a href="https://roblox.com/games/${g.rootPlaceId}" target="_blank" class="bento-card">
@@ -46,8 +52,15 @@ async function init() {
                             </div>
                             <span class="label">Experience</span>
                             <h3 class="title">${g.name}</h3>
-                            <div class="status">
-                                <div class="dot"></div> ${playingCount} Playing
+                            <p class="desc game-desc">${descText}</p>
+                            
+                            <div class="card-stats">
+                                <div class="status">
+                                    <div class="dot"></div> ${playingCount} Playing
+                                </div>
+                                <div class="visits-stat">
+                                    👁️ ${visitsCount} Visits
+                                </div>
                             </div>
                         </a>
                     `;
@@ -59,7 +72,6 @@ async function init() {
         if (GROUP_IDS.length > 0) {
             const groupQuery = GROUP_IDS.join(',');
             
-            // Fixed URLs to include the variables
             const groupPromises = GROUP_IDS.map(id => fetch(`https://groups.roproxy.com/v1/groups/${id}`).then(r => r.json()));
             const groups = await Promise.all(groupPromises);
             
@@ -85,7 +97,6 @@ async function init() {
     } catch(e) { 
         console.error("Data error:", e); 
         document.getElementById('game-grid').innerHTML = `<p style="color: var(--red);">Failed to load data. Please try again later.</p>`;
-        document.getElementById('group-grid').innerHTML = `<p style="color: var(--red);">Failed to load data. Please try again later.</p>`;
     }
 }
 
