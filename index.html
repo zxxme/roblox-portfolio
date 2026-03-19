@@ -4,66 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>loxyblox | Dashboard</title>
+    <title>loxyblox's Games</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-content">
-            <div style="font-weight:800; font-size:22px;">loxy<span style="color:var(--red);">blox</span></div>
-            <div class="nav-pill">
-                <button class="nav-item active" data-target="dash">Home</button>
-                <button class="nav-item" data-target="comm">Community</button>
-                <button class="nav-item" data-target="socs">Socials</button>
-            </div>
-            <button class="nav-item" onclick="location.reload()" style="border:1px solid var(--border)">Refresh</button>
-        </div>
-    </nav>
-
     <div class="container">
-        <!-- Experiences Page -->
-        <section id="dash" class="page active">
-            <div style="margin: 20px 0 30px 0;">
-                <h1 style="font-size: 52px; font-weight: 800; letter-spacing: -3px; color: var(--red); line-height: 1;">Experiences</h1>
-                <p style="color: var(--dim); margin-top: 10px; font-size: 16px;">Real-time tracking across our studio games.</p>
+        <!-- Header -->
+        <header class="header">
+            <h1>loxyblox's Games</h1>
+            <p>Track analytics and performance across all my Roblox creations. View real-time player counts, visit statistics, and community growth.</p>
+        </header>
+
+        <!-- Top Stats (Calculated automatically in JS) -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <span class="stat-label">Total Games</span>
+                <h2 class="stat-value" id="total-games">-</h2>
             </div>
-            <div id="game-grid" class="bento-grid">
-                <p style="color: var(--dim);">Loading experiences...</p>
+            <div class="stat-card">
+                <span class="stat-label">Combined Visits</span>
+                <h2 class="stat-value" id="total-visits">-</h2>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Total Playing</span>
+                <h2 class="stat-value" id="total-playing">-</h2>
+            </div>
+        </div>
+
+        <!-- All Games List -->
+        <section class="section">
+            <h2 class="section-title">All Games</h2>
+            <div id="game-list" class="list-grid">
+                <p class="loading">Loading experiences...</p>
             </div>
         </section>
 
-        <!-- Community Page -->
-        <section id="comm" class="page">
-            <div style="margin: 20px 0 30px 0;">
-                <h1 style="font-size: 52px; font-weight: 800; letter-spacing: -3px; color: var(--red); line-height: 1;">Groups</h1>
-                <p style="color: var(--dim); margin-top: 10px; font-size: 16px;">Total reach across our communities.</p>
-            </div>
-            <div id="group-grid" class="bento-grid">
-                <p style="color: var(--dim);">Loading communities...</p>
+        <!-- Communities List -->
+        <section class="section">
+            <h2 class="section-title">Communities</h2>
+            <div id="group-list" class="list-grid">
+                <p class="loading">Loading communities...</p>
             </div>
         </section>
 
-        <!-- Socials Page -->
-        <section id="socs" class="page">
-            <div style="margin: 20px 0 30px 0;">
-                <h1 style="font-size: 52px; font-weight: 800; letter-spacing: -3px; color: var(--red); line-height: 1;">Socials</h1>
-                <p style="color: var(--dim); margin-top: 10px; font-size: 16px;">Connect with the loxyblox team.</p>
-            </div>
-            <div class="bento-grid">
-                <a href="https://discord.gg/YOUR_INVITE" target="_blank" class="bento-card">
-                    <span class="label">Community</span>
-                    <h3 class="title">Discord</h3>
-                    <p style="color:var(--dim); font-size: 14px;">Join our community server for updates.</p>
+        <!-- Socials Grid -->
+        <section class="section">
+            <h2 class="section-title">Socials</h2>
+            <div class="socials-grid">
+                <a href="https://discord.gg/YOUR_INVITE" target="_blank" class="social-card">
+                    <span class="social-title">Discord</span>
+                    <span class="social-desc">Join Server</span>
                 </a>
-                <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="bento-card">
-                    <span class="label">Video</span>
-                    <h3 class="title">YouTube</h3>
-                    <p style="color:var(--dim); font-size: 14px;">Watch our latest development logs.</p>
+                <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="social-card">
+                    <span class="social-title">YouTube</span>
+                    <span class="social-desc">Watch Videos</span>
                 </a>
-                <a href="https://twitter.com/YOUR_HANDLE" target="_blank" class="bento-card">
-                    <span class="label">Updates</span>
-                    <h3 class="title">Twitter / X</h3>
-                    <p style="color:var(--dim); font-size: 14px;">Follow for live announcements.</p>
+                <a href="https://twitter.com/YOUR_HANDLE" target="_blank" class="social-card">
+                    <span class="social-title">Twitter / X</span>
+                    <span class="social-desc">Follow Updates</span>
+                </a>
+                <a href="https://roblox.com/users/YOUR_ID/profile" target="_blank" class="social-card">
+                    <span class="social-title">Roblox</span>
+                    <span class="social-desc">View Profile</span>
                 </a>
             </div>
         </section>
