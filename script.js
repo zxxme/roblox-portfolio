@@ -1,106 +1,108 @@
-const UNIVERSE_IDS = [
-    9753920000,
-    9863921361,
-    9561068069,
-    3827663248 // PvpMasters
-];
-
+// Added the CORRECT Universe ID for PvpMasters: 9899063762
+const UNIVERSE_IDS = [9753920000, 9863921361, 9561068069, 9899063762];
 const GROUP_IDS = [623751942, 524021069, 917252309];
-const LOGO_FALLBACK = "./images/miku_logo.png";
+const LOGO_FALLBACK = './images/miku_logo.png';
 
-// Tabs
-document.querySelectorAll(".nav-item[data-target]").forEach(btn => {
-    btn.addEventListener("click", () => {
-        document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-        document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
-        document.getElementById(btn.dataset.target).classList.add("active");
-        btn.classList.add("active");
+// Tab Switching Logic
+document.querySelectorAll('.nav-pill .nav-item').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-pill .nav-item').forEach(b => b.classList.remove('active'));
+        
+        const targetId = e.target.getAttribute('data-target');
+        document.getElementById(targetId).classList.add('active');
+        e.target.classList.add('active');
     });
 });
 
-// Number formatter
+// Format Numbers (e.g. 1000000 -> 1.0M, or 10,000)
 function formatNumber(num) {
-    if (!num) return "0";
-    if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + "M";
-    if (num >= 1_000) return (num / 1_000).toFixed(1) + "K";
+    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
     return num.toString();
 }
 
 async function init() {
     try {
-        const universeQuery = UNIVERSE_IDS.join(",");
+        // --- FETCH GAMES ---
+        if (UNIVERSE_IDS.length > 0) {
+            const universeQuery = UNIVERSE_IDS.join(',');
+            
+            // Fixed: The ${universeQuery} variable is now properly injected into the URL
+            const gRes = await fetch(`https://games.roproxy.com/v1/games?universeIds=${universeQuery}`);
+            const { data: games } = await gRes.json();
+            
+            const tRes = await fetch(`https://thumbnails.roproxy.com/v1/games/icons?universeIds=${universeQuery}&size=512x512&format=Png&isCircular=false`);
+            const { data: thumbs } = await tRes.json();
+            
+            if (games && thumbs) {
+                document.getElementById('game-grid').innerHTML = games.map(g => {
+                    const thumbData = thumbs.find(t => t.targetId === g.id);
+                    const thumbUrl = thumbData ? thumbData.imageUrl : LOGO_FALLBACK;
+                    
+                    const playingCount = g.playing ? formatNumber(g.playing) : "0";
+                    const visitsCount = g.visits ? formatNumber(g.visits) : "0";
+                    
+                    // Shorten description so it doesn't break the card size
+                    let descText = g.description || "No description provided.";
+                    if (descText.length > 70) descText = descText.substring(0, 70) + "...";
+                    
+                    // Fixed: All variables like ${g.name} and ${thumbUrl} are now properly injected
+                    return `
+                        <a href="https://roblox.com/games/${g.rootPlaceId}" target="_blank" class="bento-card">
+                            <div class="thumb-box">
+                                <img src="${thumbUrl}" onerror="this.src='${LOGO_FALLBACK}'" alt="Game Icon">
+                            </div>
+                            <span class="label">Experience</span>
+                            <h3 class="title">${g.name}</h3>
+                            <p class="desc game-desc">${descText}</p>
+                            
+                            <div class="card-stats">
+                                <div class="status">
+                                    <div class="dot"></div> ${playingCount} Playing
+                                </div>
+                                <div class="visits-stat">
+                                    👁️ ${visitsCount} Visits
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+            }
+        }
 
-        // ✅ GAMES
-        const gamesRes = await fetch(
-            `https://games.roproxy.com/v1/games?universeIds=${universeQuery}`
-        );
-        const gamesJson = await gamesRes.json();
-
-        const thumbsRes = await fetch(
-            `https://thumbnails.roproxy.com/v1/games/icons?universeIds=${universeQuery}&size=512x512&format=Png&isCircular=false`
-        );
-        const thumbsJson = await thumbsRes.json();
-
-        const games = gamesJson.data;
-        const thumbs = thumbsJson.data;
-
-        document.getElementById("game-grid").innerHTML = games.map(game => {
-            const thumb = thumbs.find(t => t.targetId === game.id);
-            const img = thumb ? thumb.imageUrl : LOGO_FALLBACK;
-
-            return `
-                <a href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank" class="bento-card">
-                    <div class="thumb-box">
-                        <img src="${img}" onerror="this.src='${LOGO_FALLBACK}'">
-                    </div>
-                    <span class="label">Experience</span>
-                    <h3 class="title">${game.name}</h3>
-                    <p class="desc game-desc">${game.description?.slice(0, 80) || "No description"}...</p>
-
-                    <div class="card-stats">
-                        <div class="status">
-                            <div class="dot"></div> ${formatNumber(game.playing)} Playing
-                        </div>
-                        <div class="visits-stat">
-                            👁️ ${formatNumber(game.visits)} Visits
-                        </div>
-                    </div>
-                </a>
-            `;
-        }).join("");
-
-        // ✅ GROUPS
-        const groupData = await Promise.all(
-            GROUP_IDS.map(id =>
-                fetch(`https://groups.roproxy.com/v1/groups/${id}`).then(r => r.json())
-            )
-        );
-
-        const groupThumbsRes = await fetch(
-            `https://thumbnails.roproxy.com/v1/groups/icons?groupIds=${GROUP_IDS.join(",")}&size=150x150&format=Png`
-        );
-        const groupThumbs = (await groupThumbsRes.json()).data;
-
-        document.getElementById("group-grid").innerHTML = groupData.map(group => {
-            const icon = groupThumbs.find(i => i.targetId === group.id);
-            const img = icon ? icon.imageUrl : LOGO_FALLBACK;
-
-            return `
-                <a href="https://www.roblox.com/groups/${group.id}" target="_blank" class="bento-card group-card">
-                    <img src="${img}" class="group-icon" onerror="this.src='${LOGO_FALLBACK}'">
-                    <span class="label">Community</span>
-                    <h3 class="title">${group.name}</h3>
-                    <p class="member-count">${formatNumber(group.memberCount)}</p>
-                    <span class="label">Members</span>
-                </a>
-            `;
-        }).join("");
-
-    } catch (err) {
-        console.error(err);
-        document.getElementById("game-grid").innerHTML =
-            `<p style="color:#ff4747">Failed to load data.</p>`;
+        // --- FETCH GROUPS ---
+        if (GROUP_IDS.length > 0) {
+            // Fixed: Added ${id} to the end of the group fetch URL
+            const groupPromises = GROUP_IDS.map(id => fetch(`https://groups.roproxy.com/v1/groups/${id}`).then(r => r.json()));
+            const groups = await Promise.all(groupPromises);
+            
+            const groupQuery = GROUP_IDS.join(',');
+            // Fixed: Added ${groupQuery} to the group icons URL
+            const iRes = await fetch(`https://thumbnails.roproxy.com/v1/groups/icons?groupIds=${groupQuery}&size=150x150&format=Png`);
+            const { data: icons } = await iRes.json();
+            
+            document.getElementById('group-grid').innerHTML = groups.map(group => {
+                const iconData = icons.find(i => i.targetId === group.id);
+                const iconUrl = iconData ? iconData.imageUrl : LOGO_FALLBACK;
+                const memberCount = group.memberCount ? formatNumber(group.memberCount) : "0";
+                
+                // Fixed: All variables are now properly injected
+                return `
+                    <a href="https://roblox.com/groups/${group.id}" target="_blank" class="bento-card group-card">
+                        <img src="${iconUrl}" class="group-icon" onerror="this.src='${LOGO_FALLBACK}'" alt="Group Icon">
+                        <span class="label">Community</span>
+                        <h3 class="title" style="margin-bottom: 4px;">${group.name}</h3>
+                        <p class="member-count">${memberCount}</p>
+                        <span class="label" style="margin-bottom: 0;">Members</span>
+                    </a>
+                `;
+            }).join('');
+        }
+    } catch(e) { 
+        console.error("Data error:", e); 
+        document.getElementById('game-grid').innerHTML = `<p style="color: var(--red);">Failed to load data. Please try again later.</p>`;
     }
 }
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener('DOMContentLoaded', init);
