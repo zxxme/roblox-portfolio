@@ -1,4 +1,5 @@
-const UNIVERSE_IDS = [9753920000, 9863921361, 9561068069];
+// Added the Universe ID for PvpMasters at the end of the array
+const UNIVERSE_IDS = [9753920000, 9863921361, 9561068069, 5857508781];
 const GROUP_IDS = [623751942, 524021069, 917252309];
 const LOGO_FALLBACK = './images/miku_logo.png';
 
@@ -14,7 +15,7 @@ document.querySelectorAll('.nav-pill .nav-item').forEach(btn => {
     });
 });
 
-// Format Numbers (e.g. 1000000 -> 1M, or 10,000)
+// Format Numbers (e.g. 1000000 -> 1.0M, or 10,000)
 function formatNumber(num) {
     if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
     if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
@@ -70,11 +71,10 @@ async function init() {
 
         // --- FETCH GROUPS ---
         if (GROUP_IDS.length > 0) {
-            const groupQuery = GROUP_IDS.join(',');
-            
             const groupPromises = GROUP_IDS.map(id => fetch(`https://groups.roproxy.com/v1/groups/${id}`).then(r => r.json()));
             const groups = await Promise.all(groupPromises);
             
+            const groupQuery = GROUP_IDS.join(',');
             const iRes = await fetch(`https://thumbnails.roproxy.com/v1/groups/icons?groupIds=${groupQuery}&size=150x150&format=Png`);
             const { data: icons } = await iRes.json();
             
