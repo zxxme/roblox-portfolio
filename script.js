@@ -1,8 +1,8 @@
+// Configuration
 const UNIVERSE_IDS = [9753920000, 9863921361, 9561068069];
 const GROUP_IDS = [623751942, 524021069, 917252309];
-const LOGO_FALLBACK = './images/miku_logo.png';
 
-// Format numbers (e.g., 1,200,000 -> 1.2M)
+// Formatter (e.g., 1100000 -> 1.1M)
 function formatNumber(num) {
     if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
     if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
@@ -16,32 +16,38 @@ async function init() {
 
         // --- FETCH GAMES ---
         if (UNIVERSE_IDS.length > 0) {
-            const universeQuery = UNIVERSE_IDS.join(',');
-            
-            const gRes = await fetch(`https://games.roproxy.com/v1/games?universeIds=${universeQuery}`);
+            const gRes = await fetch(`https://games.roproxy.com/v1/games?universeIds=${UNIVERSE_IDS.join(',')}`);
             const { data: games } = await gRes.json();
             
-            const tRes = await fetch(`https://thumbnails.roproxy.com/v1/games/icons?universeIds=${universeQuery}&size=150x150&format=Png&isCircular=false`);
-            const { data: thumbs } = await tRes.json();
-            
-            if (games && thumbs) {
-                document.getElementById('game-list').innerHTML = games.map(g => {
-                    const thumbData = thumbs.find(t => t.targetId === g.id);
-                    const thumbUrl = thumbData ? thumbData.imageUrl : LOGO_FALLBACK;
+            if (games) {
+                // Sort games by playing count (highest first)
+                games.sort((a, b) => (b.playing || 0) - (a.playing || 0));
+
+                document.getElementById('games-container').innerHTML = games.map(g => {
+                    const visits = g.visits || 0;
+                    const playing = g.playing || 0;
                     
-                    // Add to total stats
-                    totalVisits += g.visits || 0;
-                    totalPlaying += g.playing || 0;
+                    totalVisits += visits;
+                    totalPlaying += playing;
                     
                     return `
-                        <a href="https://roblox.com/games/${g.rootPlaceId}" target="_blank" class="item-card">
-                            <img src="${thumbUrl}" class="item-icon" onerror="this.src='${LOGO_FALLBACK}'">
-                            <div class="item-info">
-                                <div class="item-title">${g.name}</div>
-                                <div class="item-desc">${g.description ? g.description.substring(0, 120) + '...' : 'No description provided.'}</div>
-                                <div class="item-stats">
-                                    <div class="stat-badge"><div class="playing-dot"></div> ${formatNumber(g.playing || 0)} Playing</div>
-                                    <div class="stat-badge">👁️ ${formatNumber(g.visits || 0)} Visits</div>
+                        <a href="https://roblox.com/games/${g.rootPlaceId}" target="_blank" class="game-row">
+                            <div class="game-header">
+                                <div class="game-title-area">
+                                    <span class="game-playing-badge">${playing} playing</span>
+                                    <h3 class="game-title">${g.name}</h3>
+                                </div>
+                            </div>
+                            <p class="game-desc">${g.description ? g.description.replace(/\n/g, ' ') : 'No description available.'}</p>
+                            
+                            <div class="game-stats-footer">
+                                <div class="stat-item">
+                                    <span class="stat-item-value">${playing}</span>
+                                    <span class="stat-item-label">Playing</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-item-value">${formatNumber(visits)}</span>
+                                    <span class="stat-item-label">Visits</span>
                                 </div>
                             </div>
                         </a>
@@ -50,26 +56,41 @@ async function init() {
             }
         }
 
-        // Update Top Header Stats
-        document.getElementById('total-games').innerText = UNIVERSE_IDS.length;
-        document.getElementById('total-visits').innerText = formatNumber(totalVisits);
-        document.getElementById('total-playing').innerText = formatNumber(totalPlaying);
+        // Update Top Stats Overview
+        document.getElementById('overview-games').innerText = UNIVERSE_IDS.length;
+        document.getElementById('overview-visits').innerText = formatNumber(totalVisits);
+        document.getElementById('overview-playing').innerText = formatNumber(totalPlaying);
+        
+        // Update Section Header Badges
+        document.getElementById('total-playing-badge').innerText = `${totalPlaying} playing`;
 
         // --- FETCH GROUPS ---
         if (GROUP_IDS.length > 0) {
             const groupPromises = GROUP_IDS.map(id => fetch(`https://groups.roproxy.com/v1/groups/${id}`).then(r => r.json()));
             const groups = await Promise.all(groupPromises);
             
-            const iRes = await fetch(`https://thumbnails.roproxy.com/v1/groups/icons?groupIds=${GROUP_IDS.join(',')}&size=150x150&format=Png`);
-            const { data: icons } = await iRes.json();
-            
-            document.getElementById('group-list').innerHTML = groups.map(group => {
-                const iconData = icons.find(i => i.targetId === group.id);
-                const iconUrl = iconData ? iconData.imageUrl : LOGO_FALLBACK;
-                
+            document.getElementById('groups-container').innerHTML = groups.map(g => {
                 return `
-                    <a href="https://roblox.com/groups/${group.id}" target="_blank" class="item-card">
-                        <img src="${iconUrl}" class="item-icon" style="border-radius: 50%;" onerror="this.src='${LOGO_FALLBACK}'">
-                        <div class="item-info">
-                            <div class="item-title">${group.name}</div>
-                            <div class="item-
+                    <a href="https://roblox.com/groups/${g.id}" target="_blank" class="game-row">
+                        <div class="game-header">
+                            <div class="game-title-area">
+                                <h3 class="game-title">${g.name}</h3>
+                            </div>
+                        </div>
+                        <p class="game-desc">${g.description ? g.description.replace(/\n/g, ' ') : 'Community group.'}</p>
+                        <div class="game-stats-footer">
+                            <div class="stat-item">
+                                <span class="stat-item-value">${formatNumber(g.memberCount || 0)}</span>
+                                <span class="stat-item-label">Members</span>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+    } catch(e) { 
+        console.error("Data error:", e); 
+    }
+}
+
+document.addEventListener('DOMContentLoaded', init);

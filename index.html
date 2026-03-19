@@ -3,73 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer">
     <title>loxyblox's Games</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Using Inter font which is standard for modern dashboards -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
+        
+        <!-- Header Section -->
         <header class="header">
             <h1>loxyblox's Games</h1>
-            <p>Track analytics and performance across all my Roblox creations. View real-time player counts, visit statistics, and community growth.</p>
+            <p class="subtitle">Track analytics and performance across all my Roblox creations. View real-time player counts, visit statistics, and community growth.</p>
         </header>
 
-        <!-- Top Stats (Calculated automatically in JS) -->
-        <div class="stats-row">
-            <div class="stat-card">
-                <span class="stat-label">Total Games</span>
-                <h2 class="stat-value" id="total-games">-</h2>
+        <!-- Top Stats Overview -->
+        <div class="overview-grid">
+            <div class="stat-box">
+                <span class="stat-title">Total Games</span>
+                <div class="stat-value" id="overview-games">-</div>
             </div>
-            <div class="stat-card">
-                <span class="stat-label">Combined Visits</span>
-                <h2 class="stat-value" id="total-visits">-</h2>
+            <div class="stat-box">
+                <span class="stat-title">Combined Visits</span>
+                <div class="stat-value" id="overview-visits">-</div>
+                <div class="stat-change positive">+0.0% vs last week</div>
             </div>
-            <div class="stat-card">
-                <span class="stat-label">Total Playing</span>
-                <h2 class="stat-value" id="total-playing">-</h2>
+            <div class="stat-box">
+                <span class="stat-title">Total Playing</span>
+                <div class="stat-value" id="overview-playing">-</div>
+                <div class="stat-change negative">-0.0% vs last week</div>
             </div>
         </div>
 
-        <!-- All Games List -->
-        <section class="section">
-            <h2 class="section-title">All Games</h2>
-            <div id="game-list" class="list-grid">
-                <p class="loading">Loading experiences...</p>
+        <!-- All Games Section -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>All Games</h2>
+                <span class="header-badge" id="total-playing-badge">0 playing</span>
+            </div>
+            
+            <div id="games-container" class="cards-layout">
+                <p style="color: #a1a1aa; padding: 20px 0;">Loading experiences...</p>
             </div>
         </section>
 
-        <!-- Communities List -->
-        <section class="section">
-            <h2 class="section-title">Communities</h2>
-            <div id="group-list" class="list-grid">
-                <p class="loading">Loading communities...</p>
+        <!-- Communities Section -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>Communities</h2>
+                <span class="header-badge" id="total-group-playing">0 playing</span>
+            </div>
+            
+            <div id="groups-container" class="cards-layout">
+                <p style="color: #a1a1aa; padding: 20px 0;">Loading communities...</p>
             </div>
         </section>
 
-        <!-- Socials Grid -->
-        <section class="section">
-            <h2 class="section-title">Socials</h2>
-            <div class="socials-grid">
-                <a href="https://discord.gg/YOUR_INVITE" target="_blank" class="social-card">
-                    <span class="social-title">Discord</span>
-                    <span class="social-desc">Join Server</span>
-                </a>
-                <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="social-card">
-                    <span class="social-title">YouTube</span>
-                    <span class="social-desc">Watch Videos</span>
-                </a>
-                <a href="https://twitter.com/YOUR_HANDLE" target="_blank" class="social-card">
-                    <span class="social-title">Twitter / X</span>
-                    <span class="social-desc">Follow Updates</span>
-                </a>
-                <a href="https://roblox.com/users/YOUR_ID/profile" target="_blank" class="social-card">
-                    <span class="social-title">Roblox</span>
-                    <span class="social-desc">View Profile</span>
-                </a>
+        <!-- Socials Section -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>Socials</h2>
+            </div>
+            <div class="socials-layout">
+                <a href="#" class="social-link">Discord</a>
+                <a href="#" class="social-link">YouTube</a>
+                <a href="#" class="social-link">Twitter / X</a>
+                <a href="#" class="social-link">Roblox Profile</a>
             </div>
         </section>
+        
     </div>
 
     <script src="script.js"></script>
