@@ -3,75 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>loxyblox's Games</title>
-    <!-- Using Inter font which is standard for modern dashboards -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="referrer" content="no-referrer">
+    <title>loxyblox | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        
-        <!-- Header Section -->
-        <header class="header">
-            <h1>loxyblox's Games</h1>
-            <p class="subtitle">Track analytics and performance across all my Roblox creations. View real-time player counts, visit statistics, and community growth.</p>
-        </header>
-
-        <!-- Top Stats Overview -->
-        <div class="overview-grid">
-            <div class="stat-box">
-                <span class="stat-title">Total Games</span>
-                <div class="stat-value" id="overview-games">-</div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">loxy<span class="accent">blox</span></div>
+            <div class="nav-pill">
+                <button class="nav-item active" data-target="dash">Home</button>
+                <button class="nav-item" data-target="comm">Community</button>
+                <button class="nav-item" data-target="socs">Socials</button>
             </div>
-            <div class="stat-box">
-                <span class="stat-title">Combined Visits</span>
-                <div class="stat-value" id="overview-visits">-</div>
-                <div class="stat-change positive">+0.0% vs last week</div>
-            </div>
-            <div class="stat-box">
-                <span class="stat-title">Total Playing</span>
-                <div class="stat-value" id="overview-playing">-</div>
-                <div class="stat-change negative">-0.0% vs last week</div>
-            </div>
+            <button class="nav-item refresh-btn" onclick="location.reload()">Refresh</button>
         </div>
+    </nav>
 
-        <!-- All Games Section -->
-        <section class="content-section">
-            <div class="section-header">
-                <h2>All Games</h2>
-                <span class="header-badge" id="total-playing-badge">0 playing</span>
+    <div class="container">
+        <!-- Experiences Tab -->
+        <section id="dash" class="page active">
+            <div class="hero">
+                <h1>Experiences</h1>
+                <p>Real-time tracking across our studio games.</p>
             </div>
-            
-            <div id="games-container" class="cards-layout">
-                <p style="color: #a1a1aa; padding: 20px 0;">Loading experiences...</p>
+            <div id="game-grid" class="bento-grid">
+                <p class="loading-text">Loading experiences...</p>
             </div>
         </section>
 
-        <!-- Communities Section -->
-        <section class="content-section">
-            <div class="section-header">
-                <h2>Communities</h2>
-                <span class="header-badge" id="total-group-playing">0 playing</span>
+        <!-- Community Tab -->
+        <section id="comm" class="page">
+            <div class="hero">
+                <h1>Groups</h1>
+                <p>Total reach across our communities.</p>
             </div>
-            
-            <div id="groups-container" class="cards-layout">
-                <p style="color: #a1a1aa; padding: 20px 0;">Loading communities...</p>
+            <div id="group-grid" class="bento-grid">
+                <p class="loading-text">Loading communities...</p>
             </div>
         </section>
 
-        <!-- Socials Section -->
-        <section class="content-section">
-            <div class="section-header">
-                <h2>Socials</h2>
+        <!-- Socials Tab -->
+        <section id="socs" class="page">
+            <div class="hero">
+                <h1>Socials</h1>
+                <p>Connect with the loxyblox team.</p>
             </div>
-            <div class="socials-layout">
-                <a href="#" class="social-link">Discord</a>
-                <a href="#" class="social-link">YouTube</a>
-                <a href="#" class="social-link">Twitter / X</a>
-                <a href="#" class="social-link">Roblox Profile</a>
+            <div class="bento-grid">
+                <a href="https://discord.gg/YOUR_INVITE" target="_blank" class="bento-card social-card">
+                    <span class="label">Community</span>
+                    <h3 class="title">Discord</h3>
+                    <p class="desc">Join our community server for updates.</p>
+                </a>
+                <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="bento-card social-card">
+                    <span class="label">Video</span>
+                    <h3 class="title">YouTube</h3>
+                    <p class="desc">Watch our latest development logs.</p>
+                </a>
+                <a href="https://twitter.com/YOUR_HANDLE" target="_blank" class="bento-card social-card">
+                    <span class="label">Updates</span>
+                    <h3 class="title">Twitter / X</h3>
+                    <p class="desc">Follow for live announcements.</p>
+                </a>
             </div>
         </section>
-        
     </div>
 
     <script src="script.js"></script>
