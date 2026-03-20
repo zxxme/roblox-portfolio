@@ -1,5 +1,5 @@
 // Added the CORRECT Universe ID for PvpMasters: 9899063762
-const UNIVERSE_IDS = [383310974, 9863921361, 9561068069, 9899063762];
+const UNIVERSE_IDS = [9753920000, 9863921361, 9561068069, 9899063762];
 const GROUP_IDS = [623751942, 524021069, 917252309];
 const LOGO_FALLBACK = './images/miku_logo.png';
 
@@ -17,6 +17,7 @@ document.querySelectorAll('.nav-pill .nav-item').forEach(btn => {
 
 // Format Numbers (e.g. 1000000 -> 1.0M, or 10,000)
 function formatNumber(num) {
+    if (num >= 1000000000) return (num / 1000000000).toFixed(1) + 'B';
     if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
     if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
     return num.toString();
